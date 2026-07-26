@@ -1,0 +1,66 @@
+---
+title: "Advertising"
+author: "Henry Yang"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(broom)
+```
+
+```{r}
+#| message: false
+#| warning: false
+read_csv("marketing_AB.csv/marketing_AB.csv", show_col_types = FALSE) |> 
+  drop_na() |> 
+  group_by(`test group`) |> 
+  summarize(mean_conversion = mean(converted)) |> 
+  ggplot(aes(x = `test group`, y = mean_conversion, fill = `test group`)) +
+  geom_col(show.legend = FALSE) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_x_discrete(labels = c("ad" = "Ad Group", "psa" = "PSA Group")) +
+  scale_fill_manual(values = c("ad" = "#2b5c8f", "psa" = "#e06d53")) +
+  theme_minimal() +
+  labs(
+    title = "Conversion Rate by Test Group",
+    subtitle = "Users exposed to advertisements converted at a higher rate than those shown PSAs",
+    x = "Test Group",
+    y = "Conversion Rate",
+    caption = "Source: Marketing A/B Testing Dataset"
+  )
+```
+
+```{r}
+#| cache: true
+#| message: false
+#| warning: false
+x <- read_csv("marketing_AB.csv/marketing_AB.csv", show_col_types = FALSE) |> 
+  select(`user id`, converted, `test group`, `total ads`)
+```
+
+## Question
+Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
+
+### Variables
+**Units:** Each user (person) identified by their unique user id.
+
+**Covariates:** Total ads, which show the amount of ads that were seen by each person.
+
+**Treatment:** Test Group, which is a binary variable that indicates whether the person was in the treatment group (watched advertisements) or the control group (heard a public service announcement).
+
+## Justice
+**Counter-assumption to validity:** The aim of a public service accouncement is to inform users about the product, and not to persuade them to buy it. However, it's possible that by informing users about the product, they might be incentivized to buy it just like how advertizements try to incentivize custonmers to buy certain products. Therefore, we need more information on the content of the public service announcements to determine if they are truly neutral in their effect.
+
+**Counter-assumption to stability:** The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.
+
+**Counter-assumption to representativeness:** The data might not represent the population 
+
+## Summary
+Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
