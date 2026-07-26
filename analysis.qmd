@@ -12,6 +12,7 @@ execute:
 #| message: false
 #| warning: false
 library(tidyverse)
+library(tidymodels)
 library(broom)
 ```
 
@@ -60,7 +61,13 @@ Causal: What is the average causal effect of watching advertisements, compared t
 
 **Counter-assumption to stability:** The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.
 
-**Counter-assumption to representativeness:** The data might not represent the population 
+**Counter-assumptions to representativeness:** The data might not represent the population. We are given no demographic information about the users besides their id, which doesn't tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.
+
+**Counter-assumptions to unconfoundedness:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to the treatment group, then our estimates of the causal effect would change drastically.
+
+**Probability Family:** Bernoulli
+
+**Link Function:** Logit link (logistic regression)
 
 ## Summary
-Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
+Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted.
