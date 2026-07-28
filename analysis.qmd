@@ -14,6 +14,8 @@ execute:
 library(tidyverse)
 library(tidymodels)
 library(broom)
+library(gt)
+library(marginaleffects)
 ```
 
 ```{r}
@@ -43,8 +45,48 @@ read_csv("marketing_AB.csv/marketing_AB.csv", show_col_types = FALSE) |>
 #| message: false
 #| warning: false
 x <- read_csv("marketing_AB.csv/marketing_AB.csv", show_col_types = FALSE) |> 
-  select(`user id`, converted, `test group`, `total ads`)
+  select(`user id`, converted, `test group`, `total ads`) |> 
+  mutate(converted = factor(converted))
 ```
+
+```{r}
+logistic_reg(engine = "glm") |> 
+  fit(converted ~ `test group`, data = x) |> 
+  tidy(conf.int = TRUE) |> 
+  gt() |> 
+  tab_header(
+    title = "Logistic Regression Model: Conversion by Test Group",
+    subtitle = "Estimating the effect of PSA vs. Ad exposure on user conversion"
+  ) |> 
+  tab_source_note(source_note = "Source: Marketing A/B Testing Dataset")
+```
+
+### Interpretation
+Hearing a public service announcement resulted in a decreased probability of purchasing the product. The log-odds of a user purchasing the product is -0.366 lower than a user who watched advertisements, with a confidence interval of -0.466 to -0.270, which is well below zero. Thus, receiving the treatment of watching advertisements causes a positive increase in the probability of purchasing the product.
+
+```{r}
+logistic_reg(engine = "glm") |> 
+  fit(converted ~ `test group` + `total ads`, data = x) |> 
+  tidy(conf.int = TRUE) |> 
+  gt() |> 
+  tab_header(
+    title = "Logistic Regression Model: Conversion with Covariates",
+    subtitle = "Adjusting for the number of total ads seen by each user"
+  ) |> 
+  tab_source_note(source_note = "Source: Marketing A/B Testing Dataset")
+```
+
+### Interpretation
+In this model, the coefficient for hearing a public service announcement is -0.389 with a confidence interval of -0.492 to -0.290. This is extremely similar to the previous model, which shows that treatment was likely randomized as the adjustment didn't change the treatment estimate. Besides that, this model also tells us that for every one additional advertisement that a user sees, the log-odds of purchasing the product increases by 0.0101, with a confidence interval of 0.00995 to 0.0103. This interval also doesn't pass zero, meaning it's sstatistically significant. So, watching more advertisements increases the probability of purchasing the product.
+
+# Data Generating Mechanism
+```{r}
+#| cache: true
+fit_advertising <- logistic_reg(engine = "glm") |> fit(converted ~ `test group` + `total ads`, data = x)
+```
+
+$$\widehat{\text{logit}(P(\text{converted} = 1))} = -4.04 - 0.389 \cdot \text{test\_group}_{\text{psa}} + 0.0101 \cdot \text{total\_ads}$$
+
 
 ## Question
 Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
@@ -70,4 +112,4 @@ Causal: What is the average causal effect of watching advertisements, compared t
 **Link Function:** Logit link (logistic regression)
 
 ## Summary
-Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted.
+Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads. 

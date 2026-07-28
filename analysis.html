@@ -39,6 +39,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="analysis_files/libs/bootstrap/bootstrap-34e4ccbb14deebed80d2cee7003b924c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -82,6 +111,1024 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="kysjyrccxn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kysjyrccxn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kysjyrccxn thead, #kysjyrccxn tbody, #kysjyrccxn tfoot, #kysjyrccxn tr, #kysjyrccxn td, #kysjyrccxn th {
+  border-style: none;
+}
+
+#kysjyrccxn p {
+  margin: 0;
+  padding: 0;
+}
+
+#kysjyrccxn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kysjyrccxn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kysjyrccxn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kysjyrccxn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kysjyrccxn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kysjyrccxn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kysjyrccxn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kysjyrccxn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kysjyrccxn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kysjyrccxn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kysjyrccxn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kysjyrccxn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kysjyrccxn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kysjyrccxn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kysjyrccxn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kysjyrccxn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kysjyrccxn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kysjyrccxn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kysjyrccxn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kysjyrccxn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kysjyrccxn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kysjyrccxn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kysjyrccxn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kysjyrccxn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kysjyrccxn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kysjyrccxn .gt_left {
+  text-align: left;
+}
+
+#kysjyrccxn .gt_center {
+  text-align: center;
+}
+
+#kysjyrccxn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kysjyrccxn .gt_font_normal {
+  font-weight: normal;
+}
+
+#kysjyrccxn .gt_font_bold {
+  font-weight: bold;
+}
+
+#kysjyrccxn .gt_font_italic {
+  font-style: italic;
+}
+
+#kysjyrccxn .gt_super {
+  font-size: 65%;
+}
+
+#kysjyrccxn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kysjyrccxn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kysjyrccxn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kysjyrccxn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kysjyrccxn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kysjyrccxn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kysjyrccxn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#kysjyrccxn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#kysjyrccxn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="7" class="gt_heading gt_title gt_font_normal">Logistic Regression Model: Conversion by Test Group</td>
+</tr>
+<tr class="gt_heading even">
+<td colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Estimating the effect of PSA vs. Ad exposure on user conversion</td>
+</tr>
+<tr class="gt_col_headings header">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
+<th id="std.error" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">std.error</th>
+<th id="statistic" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">statistic</th>
+<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">p.value</th>
+<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.low</th>
+<th id="conf.high" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.high</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">-3.6413741</td>
+<td class="gt_row gt_right" headers="std.error">0.008435054</td>
+<td class="gt_row gt_right" headers="statistic">-431.69541</td>
+<td class="gt_row gt_right" headers="p.value">0.000000e+00</td>
+<td class="gt_row gt_right" headers="conf.low">-3.6579500</td>
+<td class="gt_row gt_right" headers="conf.high">-3.624885</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">`test group`psa</td>
+<td class="gt_row gt_right" headers="estimate">-0.3661322</td>
+<td class="gt_row gt_right" headers="std.error">0.049947369</td>
+<td class="gt_row gt_right" headers="statistic">-7.33036</td>
+<td class="gt_row gt_right" headers="p.value">2.295347e-13</td>
+<td class="gt_row gt_right" headers="conf.low">-0.4655201</td>
+<td class="gt_row gt_right" headers="conf.high">-0.269655</td>
+</tr>
+</tbody><tfoot>
+<tr class="gt_sourcenotes odd">
+<td colspan="7" class="gt_sourcenote">Source: Marketing A/B Testing Dataset</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Hearing a public service announcement resulted in a decreased probability of purchasing the product. The log-odds of a user purchasing the product is -0.366 lower than a user who watched advertisements, with a confidence interval of -0.466 to -0.270, which is well below zero. Thus, receiving the treatment of watching advertisements causes a positive increase in the probability of purchasing the product.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="pzfvywudbg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pzfvywudbg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pzfvywudbg thead, #pzfvywudbg tbody, #pzfvywudbg tfoot, #pzfvywudbg tr, #pzfvywudbg td, #pzfvywudbg th {
+  border-style: none;
+}
+
+#pzfvywudbg p {
+  margin: 0;
+  padding: 0;
+}
+
+#pzfvywudbg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pzfvywudbg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pzfvywudbg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pzfvywudbg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pzfvywudbg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pzfvywudbg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pzfvywudbg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pzfvywudbg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pzfvywudbg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pzfvywudbg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pzfvywudbg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pzfvywudbg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pzfvywudbg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pzfvywudbg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pzfvywudbg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzfvywudbg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pzfvywudbg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pzfvywudbg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pzfvywudbg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzfvywudbg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pzfvywudbg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzfvywudbg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pzfvywudbg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzfvywudbg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzfvywudbg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzfvywudbg .gt_left {
+  text-align: left;
+}
+
+#pzfvywudbg .gt_center {
+  text-align: center;
+}
+
+#pzfvywudbg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pzfvywudbg .gt_font_normal {
+  font-weight: normal;
+}
+
+#pzfvywudbg .gt_font_bold {
+  font-weight: bold;
+}
+
+#pzfvywudbg .gt_font_italic {
+  font-style: italic;
+}
+
+#pzfvywudbg .gt_super {
+  font-size: 65%;
+}
+
+#pzfvywudbg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pzfvywudbg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pzfvywudbg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pzfvywudbg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pzfvywudbg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pzfvywudbg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pzfvywudbg .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#pzfvywudbg .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#pzfvywudbg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="7" class="gt_heading gt_title gt_font_normal">Logistic Regression Model: Conversion with Covariates</td>
+</tr>
+<tr class="gt_heading even">
+<td colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Adjusting for the number of total ads seen by each user</td>
+</tr>
+<tr class="gt_col_headings header">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
+<th id="std.error" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">std.error</th>
+<th id="statistic" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">statistic</th>
+<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">p.value</th>
+<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.low</th>
+<th id="conf.high" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.high</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">-4.04123660</td>
+<td class="gt_row gt_right" headers="std.error">1.014406e-02</td>
+<td class="gt_row gt_right" headers="statistic">-398.384359</td>
+<td class="gt_row gt_right" headers="p.value">0.000000e+00</td>
+<td class="gt_row gt_right" headers="conf.low">-4.061175348</td>
+<td class="gt_row gt_right" headers="conf.high">-4.02140932</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">`test group`psa</td>
+<td class="gt_row gt_right" headers="estimate">-0.38942756</td>
+<td class="gt_row gt_right" headers="std.error">5.148309e-02</td>
+<td class="gt_row gt_right" headers="statistic">-7.564183</td>
+<td class="gt_row gt_right" headers="p.value">3.903085e-14</td>
+<td class="gt_row gt_right" headers="conf.low">-0.491854539</td>
+<td class="gt_row gt_right" headers="conf.high">-0.28993616</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">`total ads`</td>
+<td class="gt_row gt_right" headers="estimate">0.01014506</td>
+<td class="gt_row gt_right" headers="std.error">9.860266e-05</td>
+<td class="gt_row gt_right" headers="statistic">102.888301</td>
+<td class="gt_row gt_right" headers="p.value">0.000000e+00</td>
+<td class="gt_row gt_right" headers="conf.low">0.009951997</td>
+<td class="gt_row gt_right" headers="conf.high">0.01033852</td>
+</tr>
+</tbody><tfoot>
+<tr class="gt_sourcenotes odd">
+<td colspan="7" class="gt_sourcenote">Source: Marketing A/B Testing Dataset</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>In this model, the coefficient for hearing a public service announcement is -0.389 with a confidence interval of -0.492 to -0.290. This is extremely similar to the previous model, which shows that treatment was likely randomized as the adjustment didn’t change the treatment estimate. Besides that, this model also tells us that for every one additional advertisement that a user sees, the log-odds of purchasing the product increases by 0.0101, with a confidence interval of 0.00995 to 0.0103. This interval also doesn’t pass zero, meaning it’s sstatistically significant. So, watching more advertisements increases the probability of purchasing the product.</p>
+<p><span class="math display">\[\widehat{\text{logit}(P(\text{converted} = 1))} = -4.04 - 0.389 \cdot \text{test\_group}_{\text{psa}} + 0.0101 \cdot \text{total\_ads}\]</span></p>
+</section>
 <section id="question" class="level2">
 <h2 class="anchored" data-anchor-id="question">Question</h2>
 <p>Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?</p>
@@ -96,11 +1143,14 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="justice">Justice</h2>
 <p><strong>Counter-assumption to validity:</strong> The aim of a public service accouncement is to inform users about the product, and not to persuade them to buy it. However, it’s possible that by informing users about the product, they might be incentivized to buy it just like how advertizements try to incentivize custonmers to buy certain products. Therefore, we need more information on the content of the public service announcements to determine if they are truly neutral in their effect.</p>
 <p><strong>Counter-assumption to stability:</strong> The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.</p>
-<p><strong>Counter-assumption to representativeness:</strong></p>
+<p><strong>Counter-assumptions to representativeness:</strong> The data might not represent the population. We are given no demographic information about the users besides their id, which doesn’t tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.</p>
+<p><strong>Counter-assumptions to unconfoundedness:</strong> We don’t know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to the treatment group, then our estimates of the causal effect would change drastically.</p>
+<p><strong>Probability Family:</strong> Bernoulli</p>
+<p><strong>Link Function:</strong> Logit link (logistic regression)</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer’s behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?</p>
+<p>Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer’s behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don’t know if treatment assignment was random. If treatment assignment wasn’t random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads.</p>
 </section>
 
 </main>
