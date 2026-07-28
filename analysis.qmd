@@ -79,7 +79,7 @@ logistic_reg(engine = "glm") |>
 ### Interpretation
 In this model, the coefficient for hearing a public service announcement is -0.389 with a confidence interval of -0.492 to -0.290. This is extremely similar to the previous model, which shows that treatment was likely randomized as the adjustment didn't change the treatment estimate. Besides that, this model also tells us that for every one additional advertisement that a user sees, the log-odds of purchasing the product increases by 0.0101, with a confidence interval of 0.00995 to 0.0103. This interval also doesn't pass zero, meaning it's statistically significant. So, watching more advertisements increases the probability of purchasing the product.
 
-# Data Generating Mechanism
+## Data Generating Mechanism
 ```{r}
 #| cache: true
 fit_advertising <- logistic_reg(engine = "glm") |> fit(converted ~ `test group` + `total ads`, data = x)
