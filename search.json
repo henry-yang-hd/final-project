@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "model.html",
+    "href": "model.html",
+    "title": "Model and Analysis",
+    "section": "",
+    "text": "Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?\n\n\nUnits: Each user (person) identified by their unique user id.\nCovariates: Total ads, which show the amount of ads that were seen by each person.\nTreatment: Test Group, which is a binary variable that indicates whether the person was in the treatment group (watched advertisements) or the control group (heard a public service announcement)."
+  },
+  {
+    "objectID": "model.html#question",
+    "href": "model.html#question",
+    "title": "Model and Analysis",
+    "section": "",
+    "text": "Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?\n\n\nUnits: Each user (person) identified by their unique user id.\nCovariates: Total ads, which show the amount of ads that were seen by each person.\nTreatment: Test Group, which is a binary variable that indicates whether the person was in the treatment group (watched advertisements) or the control group (heard a public service announcement)."
+  },
+  {
+    "objectID": "model.html#justice",
+    "href": "model.html#justice",
+    "title": "Model and Analysis",
+    "section": "Justice",
+    "text": "Justice\nCounter-assumption to validity: The aim of a public service accouncement is to inform users about the product, and not to persuade them to buy it. However, it’s possible that by informing users about the product, they might be incentivized to buy it just like how advertizements try to incentivize custonmers to buy certain products. Therefore, we need more information on the content of the public service announcements to determine if they are truly neutral in their effect.\nCounter-assumption to stability: The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.\nCounter-assumptions to representativeness: The data might not represent the population. We are given no demographic information about the users besides their id, which doesn’t tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. One thing we do know, is how the data has a disproportionate distribution of treatment assignments. 96% of the users have been treated with ads, and only 4% of user received the control, psa. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.\nCounter-assumptions to unconfoundedness: We don’t know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to the treatment group, then our estimates of the causal effect would change drastically.\nProbability Family: Bernoulli\nLink Function: Logit link (logistic regression)"
+  },
+  {
+    "objectID": "model.html#models",
+    "href": "model.html#models",
+    "title": "Model and Analysis",
+    "section": "Models",
+    "text": "Models\n\n\n\n\n\n\n\n\nLogistic Regression Model: Conversion by Test Group\n\n\nEstimating the effect of PSA vs. Ad exposure on user conversion\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\nconf.low\nconf.high\n\n\n\n\n(Intercept)\n-4.0075063\n0.04922997\n-81.40380\n0.000000e+00\n-4.105532\n-3.9124793\n\n\n`test group`ad\n0.3661322\n0.04994737\n7.33036\n2.295347e-13\n0.269655\n0.4655201\n\n\n\nSource: Marketing A/B Testing Dataset\n\n\n\n\n\n\n\n\n\nInterpretation\nReceiving ads resulted in a increased probability of purchasing the product. The log-odds of a user purchasing the product is 0.366 higher for a user who watched advertisements, with a confidence interval of 0.270 to 0.466, which is well above zero.\n\n\n\n\n\n\n\n\nLogistic Regression Model: Conversion with Covariates\n\n\nAdjusting for the number of total ads seen by each user\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\nconf.low\nconf.high\n\n\n\n\n(Intercept)\n-4.43066417\n5.109069e-02\n-86.721556\n0.000000e+00\n-4.532363873\n-4.33198391\n\n\n`test group`ad\n0.38942756\n5.148309e-02\n7.564183\n3.903085e-14\n0.289936159\n0.49185454\n\n\n`total ads`\n0.01014506\n9.860266e-05\n102.888301\n0.000000e+00\n0.009951997\n0.01033852\n\n\n\nSource: Marketing A/B Testing Dataset\n\n\n\n\n\n\n\n\n\n\nInterpretation\nAdjusting for total ads, the coefficient for hearing a public service announcement is 0.389 with a confidence interval of 0.290 to 0.492. This is extremely similar to the previous model, which shows that treatment was likely randomized as the adjustment didn’t change the treatment estimate. Besides that, this model also tells us that for every one additional advertisement that a user sees, the log-odds of purchasing the product increases by 0.0101, with a confidence interval of 0.00995 to 0.0103. This interval also doesn’t pass zero, meaning it’s statistically significant. So, watching more advertisements increases the probability of purchasing the product."
+  },
+  {
+    "objectID": "model.html#data-generating-mechanism-formula",
+    "href": "model.html#data-generating-mechanism-formula",
+    "title": "Model and Analysis",
+    "section": "Data Generating Mechanism Formula",
+    "text": "Data Generating Mechanism Formula\n\\[\\widehat{\\text{logit}(P(\\text{converted} = 1))} = -4.04 - 0.389 \\cdot \\text{test\\_group}_{\\text{psa}} + 0.0101 \\cdot \\text{total\\_ads}\\]"
+  },
+  {
+    "objectID": "model.html#temperance",
+    "href": "model.html#temperance",
+    "title": "Model and Analysis",
+    "section": "Temperance",
+    "text": "Temperance\n\n\n\n Estimate Std. Error    z Pr(&gt;|z|)     S   2.5 %  97.5 %\n  0.00765   0.000354 21.6   &lt;0.001 342.0 0.00696 0.00834\n\nTerm: test group\nType: response\nComparison: ad - psa\n\n\n\nInterpretation\nAdjusted for total ads, the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you’ll buy a product.\n\n\nGraphs"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Github\nhttps://github.com/henry-yang-hd\n\n\nEmail\nhenryy621@gmail.com\n\n\nAbout Me\nI’m Henry Yang, a student at Stuyvesant High School in New York City. I am currently a upcoming junior, and I’ve took interest in data science and statistics. This data science project is my final project for David Kane’s Data Science Bootcamp (https://bootcamp.davidkane.info/). The goal of this project is to analyze the effects of advertisements, compared to public service announcements, on users and how they affect the probability that a user purchases a product."
+  },
+  {
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Sources",
+    "section": "",
+    "text": "This project utilized data from the Marketing A/B Testing dataset by FavioVázquez, which can be found at https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing. Besides that, This project was made possible by my teacher, David Kane, and my breakout room TF, Anish, in the Data Science Bootcamp. Additionally, I used Google Antigravity to help me with the code for models and graphs, and the packages I used for this project were tidyverse, tidymodels, broom, gt, and marginaleffects."
+  },
+  {
+    "objectID": "index.html#summary",
+    "href": "index.html#summary",
+    "title": "Overview",
+    "section": "Summary",
+    "text": "Summary\nAdvertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer’s behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don’t know if treatment assignment was random. If treatment assignment wasn’t random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads. One quantity of interest is how the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834, adjusting for total ads. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you’ll buy a product. This estimate might be wrong because we don’t know if the public service announcements are neutral, and if the data isn’t over representing any demographic groups. Additionally, the effects of advertisements may have changed between the time the data was collected (~2021) and the present day. So, the confidence intervals should be widened for more accuracy."
+  }
+]
