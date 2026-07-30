@@ -98,6 +98,39 @@ avg_comparisons(extract_fit_engine(fit_advertising), variables = "test group", c
 ### Interpretation
 Adjusted for total ads, the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product.
 
+```{r}
+plot_predictions(extract_fit_engine(fit_advertising), condition = c("test group"), draw = FALSE) |> 
+  ggplot(aes(x = `test group`, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  geom_pointrange() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Predicted Probability of Purchasing Product by Test Group",
+    subtitle = "Causal effect is around 0.765 percentage points, which small confidence intervals",
+    y = "Percentage",
+    caption = "Source: Marketing A/B Testing Dataset"
+  )
+```
+
+```{r}
+plot_predictions(
+  extract_fit_engine(fit_advertising), 
+  condition = list("test group", "total ads" = c(1, 4, 13, 27)), 
+  draw = FALSE
+) |> 
+  ggplot(aes(x = factor(`total ads`), y = estimate, color = `test group`, ymin = conf.low, ymax = conf.high)) +
+  geom_pointrange(position = position_dodge(width = 0.4)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Predicted Probability of Purchasing Product by Test Group and Total Ads",
+    subtitle = "More ads/psas lead to higher probability of purchasing the product for both test groups, with the ad group showing greater increases in probability",
+    x = "Total Ads/PSA Interactions (Min, Q1, Median, Q3)",
+    y = "Percentages",
+    caption = "Source: Marketing A/B Testing Dataset",
+    color = "Test Group"
+  )
+```
+
+
 ## Question
 Causal: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
 
@@ -113,7 +146,7 @@ Causal: What is the average causal effect of watching advertisements, compared t
 
 **Counter-assumption to stability:** The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.
 
-**Counter-assumptions to representativeness:** The data might not represent the population. We are given no demographic information about the users besides their id, which doesn't tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.
+**Counter-assumptions to representativeness:** The data might not represent the population. We are given no demographic information about the users besides their id, which doesn't tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. One thing we do know, is how the data has a disproportionate distribution of treatment assignments. 96% of the users have been treated with ads, and only 4% of user received the control, psa. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.
 
 **Counter-assumptions to unconfoundedness:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to the treatment group, then our estimates of the causal effect would change drastically.
 
@@ -122,4 +155,4 @@ Causal: What is the average causal effect of watching advertisements, compared t
 **Link Function:** Logit link (logistic regression)
 
 ## Summary
-Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads. 
+Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads. One quantity of interest is how the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834, adjusting for total ads. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product. This estimate might be wrong because we don't know if the public service announcements are neutral, and if the data isn't over representing any demographic groups. Additionally, the effects of advertisements may have changed between the time the data was collected (~2021) and the present day. So, the confidence intervals should be widened for more accuracy.
