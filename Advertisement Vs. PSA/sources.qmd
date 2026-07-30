@@ -1,0 +1,6 @@
+---
+title: "Sources"
+format: html
+---
+
+This project utilized data from the Marketing A/B Testing dataset by FavioVázquez, which can be found at [https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing](https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing). Besides that, This project was made possible by my teacher, David Kane, and my breakout room TF, Anish, in the Data Science Bootcamp. Additionally, I used Google Antigravity to help me with the code for models and graphs, and the packages I used for this project were tidyverse, tidymodels, broom, gt, and marginaleffects.

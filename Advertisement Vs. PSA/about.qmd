@@ -2,4 +2,11 @@
 title: "About"
 ---
 
-About this site
+### Github
+https://github.com/henry-yang-hd
+
+### Email
+henryy621@gmail.com
+
+### About Me
+I'm Henry Yang, a student at Stuyvesant High School in New York City. I am currently a upcoming junior, and I've took interest in data science and statistics. This data science project is my final project for David Kane's Data Science Bootcamp (https://bootcamp.davidkane.info/). The goal of this project is to analyze the effects of advertisements, compared to public service announcements, on users and how they affect the probability that a user purchases a product. 
