@@ -93,15 +93,23 @@ logistic_reg(engine = "glm") |>
 ### Interpretation
 **Main:** Adjusting for the covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. This means that Social Media and Email have relatively the same effect on conversion rates. Besides that, this model also tells us the coefficients for all the other variables:
 
-**• Age:** For every one additional year of age, the log-odds of purchasing the product increases by 0.00133, with a confidence interval of -0.00331 to 0.00597. This interval includes zero, meaning it is not statistically significant. So, age does not have a clear effect on the probability of purchasing the product.
-**• Gender:** For male users compared to female users, the log-odds of purchasing the product increases by 0.0134, with a confidence interval of -0.128 to 0.155. This interval includes zero, meaning it is not statistically significant. So, gender does not have a clear effect on the probability of purchasing the product.
-**• Income:** For every additional $10,000 of income, the log-odds of purchasing the product increases by 0.0108, with a confidence interval of -0.00762 to 0.0293. This interval barely includes zero, but it is still not statistically significant. So, income does not have a clear effect on the probability of purchasing the product.
-**• AdSpend:** For every additional $100 spent on advertising, the log-odds of purchasing the product increases by 0.0146, with a confidence interval of 0.0121 to 0.0171. This interval doesn't pass zero, meaning it's statistically significant. So, higher ad spend increases the probability of purchasing the product.
-**• WebsiteVisits:** For every one additional website visit, the log-odds of purchasing the product increases by 0.0185, with a confidence interval of 0.0136 to 0.0234. This interval doesn't pass zero, meaning it's statistically significant. So, visiting the website more often increases the probability of purchasing the product.
-**• PagesPerVisit:** For every one additional page viewed per visit, the log-odds of purchasing the product increases by 0.131, with a confidence interval of 0.104 to 0.159. This interval doesn't pass zero, meaning it's statistically significant. So, viewing more pages per visit increases the probability of purchasing the product.
-**• TimeOnSite:** For every one additional minute of time spent on the site, the log-odds of purchasing the product increases by 0.100, with a confidence interval of 0.0835 to 0.117. This interval doesn't pass zero, meaning it's statistically significant. So, spending more time on site increases the probability of purchasing the product.
-**• SocialShares:** For every one additional social share, the log-odds of purchasing the product decreases by 0.00101, with a confidence interval of -0.00342 to 0.00139. This interval includes zero, meaning it is not statistically significant. So, social sharing does not have a clear effect on the probability of purchasing the product.
-**• PreviousPurchases:** For every one additional previous purchase, the log-odds of purchasing the product increases by 0.128, with a confidence interval of 0.104 to 0.153. This interval doesn't pass zero, meaning it's statistically significant. So, having more previous purchases increases the probability of purchasing the product.
+* **Age:** For every one additional year of age, the log-odds of purchasing the product increases by 0.00133, with a confidence interval of -0.00331 to 0.00597. This interval includes zero, meaning it is not statistically significant. So, age does not have a clear effect on the probability of purchasing the product.
+
+* **Gender:** For male users compared to female users, the log-odds of purchasing the product increases by 0.0134, with a confidence interval of -0.128 to 0.155. This interval includes zero, meaning it is not statistically significant. So, gender does not have a clear effect on the probability of purchasing the product.
+
+* **Income:** For every additional $10,000 of income, the log-odds of purchasing the product increases by 0.0108, with a confidence interval of -0.00762 to 0.0293. This interval includes zero, meaning it is not statistically significant. So, income does not have a clear effect on the probability of purchasing the product.
+
+* **AdSpend:** For every additional $100 spent on advertising, the log-odds of purchasing the product increases by 0.0146, with a confidence interval of 0.0121 to 0.0171. This interval doesn't pass zero, meaning it's statistically significant. So, higher ad spend increases the probability of purchasing the product.
+
+* **WebsiteVisits:** For every one additional website visit, the log-odds of purchasing the product increases by 0.0185, with a confidence interval of 0.0136 to 0.0234. This interval doesn't pass zero, meaning it's statistically significant. So, visiting the website more often increases the probability of purchasing the product.
+
+* **PagesPerVisit:** For every one additional page viewed per visit, the log-odds of purchasing the product increases by 0.131, with a confidence interval of 0.104 to 0.159. This interval doesn't pass zero, meaning it's statistically significant. So, viewing more pages per visit increases the probability of purchasing the product.
+
+* **TimeOnSite:** For every one additional minute of time spent on the site, the log-odds of purchasing the product increases by 0.100, with a confidence interval of 0.0835 to 0.117. This interval doesn't pass zero, meaning it's statistically significant. So, spending more time on site increases the probability of purchasing the product.
+
+* **SocialShares:** For every one additional social share, the log-odds of purchasing the product decreases by 0.00101, with a confidence interval of -0.00342 to 0.00139. This interval includes zero, meaning it is not statistically significant. So, social sharing does not have a clear effect on the probability of purchasing the product.
+
+* **PreviousPurchases:** For every one additional previous purchase, the log-odds of purchasing the product increases by 0.128, with a confidence interval of 0.104 to 0.153. This interval doesn't pass zero, meaning it's statistically significant. So, having more previous purchases increases the probability of purchasing the product.
 
 
 ## Data Generating Mechanism Formula
@@ -114,7 +122,13 @@ fit_campaign <- logistic_reg(engine = "glm") |>
   )
 ```
 
-$$\widehat{\text{logit}(P(\text{Conversion} = 1))} = -1.25 + 0.143 \cdot \text{CampaignChannel}_{\text{PPC}} + 0.151 \cdot \text{CampaignChannel}_{\text{Referral}} + 0.0915 \cdot \text{CampaignChannel}_{\text{SEO}} - 0.00165 \cdot \text{CampaignChannel}_{\text{Social Media}} + 0.00133 \cdot \text{Age} + 0.0134 \cdot \text{Gender}_{\text{Male}} + 0.0108 \cdot \text{Income}_{10k} + 0.0146 \cdot \text{AdSpend}_{100} + 0.0185 \cdot \text{WebsiteVisits} + 0.131 \cdot \text{PagesPerVisit} + 0.100 \cdot \text{TimeOnSite} - 0.00101 \cdot \text{SocialShares} + 0.128 \cdot \text{PreviousPurchases}$$
+$$\begin{aligned}
+\widehat{\text{logit}(P(\text{Conversion} = 1))} &= -1.25 + 0.143 \cdot \text{CampaignChannel}_{\text{PPC}} + 0.151 \cdot \text{CampaignChannel}_{\text{Referral}} \\
+&\quad + 0.0915 \cdot \text{CampaignChannel}_{\text{SEO}} - 0.00165 \cdot \text{CampaignChannel}_{\text{Social Media}} \\
+&\quad + 0.00133 \cdot \text{Age} + 0.0134 \cdot \text{Gender}_{\text{Male}} + 0.0108 \cdot \text{Income}_{10k} \\
+&\quad + 0.0146 \cdot \text{AdSpend}_{100} + 0.0185 \cdot \text{WebsiteVisits} + 0.131 \cdot \text{PagesPerVisit} \\
+&\quad + 0.100 \cdot \text{TimeOnSite} - 0.00101 \cdot \text{SocialShares} + 0.128 \cdot \text{PreviousPurchases}
+\end{aligned}$$
 
 
 ## Temperance
@@ -122,8 +136,8 @@ $$\widehat{\text{logit}(P(\text{Conversion} = 1))} = -1.25 + 0.143 \cdot \text{C
 avg_comparisons(extract_fit_engine(fit_campaign))
 ```
 
-### Interpretation
-Adjusting for all the covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product.
+### Interpretation - Answering the initial question
+Adjusting for all the covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a 0.0174 percentage point increase in the probability that you'll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). However, not only is this an extremely small probability difference, but also the confidence intervals pass zero. Therefore, there isn't really a causal change between Social Media and Email.
 
 ### Graphs
 ```{r}
