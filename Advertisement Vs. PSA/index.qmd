@@ -21,24 +21,28 @@ library(marginaleffects)
 ```{r}
 #| message: false
 #| warning: false
-read_csv("marketing_AB.csv", show_col_types = FALSE) |> 
+read_csv("digital_marketing_campaign_dataset - digital_marketing_campaign_dataset.csv.csv", show_col_types = FALSE) |> 
   drop_na() |> 
-  group_by(`test group`) |> 
-  summarize(mean_conversion = mean(converted)) |> 
-  ggplot(aes(x = `test group`, y = mean_conversion, fill = `test group`)) +
+  group_by(CampaignChannel) |> 
+  summarize(mean_conversion = mean(Conversion)) |> 
+  ggplot(aes(x = CampaignChannel, y = mean_conversion, fill = CampaignChannel)) +
   geom_col(show.legend = FALSE) +
   scale_y_continuous(labels = scales::percent) +
-  scale_x_discrete(labels = c("ad" = "Ad Group", "psa" = "PSA Group")) +
-  scale_fill_manual(values = c("ad" = "#2b5c8f", "psa" = "#e06d53")) +
+  coord_cartesian(ylim = c(0.75, NA)) +
   theme_minimal() +
   labs(
-    title = "Conversion Rate by Test Group",
-    subtitle = "Users exposed to advertisements converted at a higher rate than those shown PSAs",
-    x = "Test Group",
-    y = "Conversion Rate",
-    caption = "Source: Marketing A/B Testing Dataset"
+    title = "Average Conversion Rate by Campaign Channel",
+    subtitle = "PPC and Referrals have the highest conversion rates, while Social Media has the lowest.",
+    x = "Campaign Channel",
+    y = "Average Conversion Rate",
+    caption = "Source: Digital Marketing Campaign Dataset"
   )
 ```
 
 ## Summary
-Advertisements tend to play a crucial role in a company that tries to make sales, but how much does it actually change a customer's behavior? This model uses experimental data from the Marketing A/B Testing dataset by FavioVázquez to try to answer the question: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models conversion as a Bernoulli variable which is a logistic function of test group and total ads. One quantity of interest is how the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834, adjusting for total ads. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product. This estimate might be wrong because we don't know if the public service announcements are neutral, and if the data isn't over representing any demographic groups. Additionally, the effects of advertisements may have changed between the time the data was collected (~2021) and the present day. So, the confidence intervals should be widened for more accuracy.
+The medium in which a campaign is delivered can significantly impact its effectiveness. This model uses data from the Digital Marketing Campaign dataset by Zafar to try to answer the question: What is the average causal effect of getting an email, compared to seeing a social media post, on the probability that a customer purchases a product? One significant potential weakness of this model is how we don't know if treatment assignment was random. If treatment assignment wasn't random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models Conversion as a Bernoulli variable which is a logistic function of CampaignChannel, Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, and PreviousPurchases. 
+
+One quantity of interest is how the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834, adjusting for total ads. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product. This estimate might be wrong because we don't know if the public service announcements are neutral, and if the data isn't over representing any demographic groups. Additionally, the effects of advertisements may have changed between the time the data was collected (~2021) and the present day. So, the confidence intervals should be widened for more accuracy.
+
+
+https://www.kaggle.com/datasets/zafarali27/digital-marketing-campaign

@@ -19,24 +19,26 @@ library(marginaleffects)
 ```
 
 ## Question
-**Causal**: What is the average causal effect of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product?
+**Causal**: What is the average causal effect of getting an email, compared to seeing a social media post, on the probability that a customer purchases a product?
 
 ### Variables
-**Units:** Each user (person) identified by their unique user id.
+**Units:** Each customer identified by their unique user id.
 
-**Covariates:** Total ads, which show the amount of ads that were seen by each person.
+**Covariates:** Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, PreviousPurchases.
 
-**Treatment:** Test Group, which is a binary variable that indicates whether the person was in the treatment group (watched advertisements) or the control group (heard a public service announcement).
+**Treatment:** CampaignChannel.
+
+**Outcome:** Conversion.
 
 
 ## Justice
-**Counter-assumption to validity:** The aim of a public service accouncement is to inform users about the product, and not to persuade them to buy it. However, it's possible that by informing users about the product, they might be incentivized to buy it just like how advertizements try to incentivize custonmers to buy certain products. Therefore, we need more information on the content of the public service announcements to determine if they are truly neutral in their effect.
+**Counter-assumption to validity:** The campaign channel is not specific enough. The "Email" treatment might be the same as the "Referral" treatment if the referral was just done by email. So, the CampaignChannel might not have valid correspondence to the treatments we really want to measure in the Preceptor Table. Therefore, we need more information on each treatment within CampaignChannel to determine if they are distinct.
 
-**Counter-assumption to stability:** The data is from an experiment that took place five years ago, 2021, and the effect of advertisements on users may have changed from 2021 to 2026. This may be due to many factors such as changes in trends, changes in the economy which may determine if users can afford to purchase certain products, and changes in technology and the methods of advertising. So, the slope on the effect of watching an advertisement might have changed between 2021 and present day, which is what we want data on.
+**Counter-assumption to stability:** The data is from an experiment that took place two years ago, 2024, and the effect of advertisements on users may have changed from 2024 to 2026. Although two years might not have much of an effect, changes may have occured in trends, in the economy which may determine if users can afford to purchase certain products, and in technology. So, the slope on the effect of watching an advertisement might have changed between 2024 and present day, which is what we want to predict.
 
-**Counter-assumptions to representativeness:** The data might not represent the population. We are given no demographic information about the users besides their id, which doesn't tell us anything about the users themselves. The data might only focus on the older population, or only the male population, which may cause bias within the model. One thing we do know, is how the data has a disproportionate distribution of treatment assignments. 96% of the users have been treated with ads, and only 4% of user received the control, psa. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. This is because the data is from 2021, and various factors such as technology, trends, and advertising methods are changing especially in this time period.
+**Counter-assumptions to representativeness:** The data might not represent the population. In this dataset, the conversion rates for all Campaign Channels are around 70% to 80%, which seems unrealistic. However, we're only trying to answer the causal effect, which is between treatments, so this shouldn't be a major concern if the experiment was done correctly. Another subtle thing to note is how the data is comprised of 60% females and 40% males, a slight disproportionate distribution that may or may not add a small bias. Furthermore, the population in the dataset might not represent the present day population we want to make estimates for. 
 
-**Counter-assumptions to unconfoundedness:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to the treatment group, then our estimates of the causal effect would change drastically.
+**Counter-assumptions to unconfoundedness:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to a specific treatment group, then our estimates of the causal effect would change drastically.
 
 **Probability Family:** Bernoulli
 
@@ -48,93 +50,111 @@ library(marginaleffects)
 #| cache: true
 #| message: false
 #| warning: false
-x <- read_csv("marketing_AB.csv", show_col_types = FALSE) |> 
-  select(`user id`, converted, `test group`, `total ads`) |> 
+x <- read_csv("digital_marketing_campaign_dataset - digital_marketing_campaign_dataset.csv.csv", show_col_types = FALSE) |> 
+  select(Conversion, CampaignChannel, Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, PreviousPurchases) |> 
   mutate(
-    converted = factor(converted),
-    `test group` = factor(`test group`, levels = c("psa", "ad"))
+    Conversion = factor(Conversion, levels = c(0, 1)),
+    CampaignChannel = factor(CampaignChannel),
+    Gender = factor(Gender)
   )
 ```
 
 ```{r}
 logistic_reg(engine = "glm") |> 
-  fit(converted ~ `test group`, data = x) |> 
+  fit(Conversion ~ CampaignChannel, data = x) |> 
   tidy(conf.int = TRUE) |> 
   gt() |> 
   tab_header(
-    title = "Logistic Regression Model: Conversion by Test Group",
-    subtitle = "Estimating the effect of PSA vs. Ad exposure on user conversion"
+    title = "Logistic Regression Model: Conversion by Campaign Channel",
+    subtitle = "Estimating the effect of different campaign channels on user conversion rates"
   ) |> 
-  tab_source_note(source_note = "Source: Marketing A/B Testing Dataset")
+  tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
 ```
 
 ### Interpretation
-Receiving ads resulted in a increased probability of purchasing the product. The log-odds of a user purchasing the product is 0.366 higher for a user who watched advertisements, with a confidence interval of 0.270 to 0.466, which is well above zero.
+Social Media resulted in an average decrease in the probability of purchasing a product. The log-odds of a customer purchasing the product is -0.0170 lower for a customer who used Social Media (compared to Email), with a confidence interval of -0.227 to 0.193. This confidence interval passes zero, meaning that the effect of Social Media on the probability of purchasing a product compared to Emailis not statistically significant. The estimate is so small that it's basically zero.
 
 
 ```{r}
 logistic_reg(engine = "glm") |> 
-  fit(converted ~ `test group` + `total ads`, data = x) |> 
+  fit(
+    Conversion ~ CampaignChannel + Age + Gender + Income + AdSpend + WebsiteVisits + PagesPerVisit + TimeOnSite + SocialShares + PreviousPurchases, 
+    data = x |> mutate(Income = Income / 10000, AdSpend = AdSpend / 100)
+  ) |> 
   tidy(conf.int = TRUE) |> 
   gt() |> 
   tab_header(
-    title = "Logistic Regression Model: Conversion with Covariates",
-    subtitle = "Adjusting for the number of total ads seen by each user"
+    title = "Logistic Regression Model: Conversion with Campaign Channel and other Covariates",
+    subtitle = "Adjusting for other covariates"
   ) |> 
-  tab_source_note(source_note = "Source: Marketing A/B Testing Dataset")
+  tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
 ```
 
 ### Interpretation
-Adjusting for total ads, the coefficient for hearing a public service announcement is 0.389 with a confidence interval of 0.290 to 0.492. This is extremely similar to the previous model, which shows that treatment was likely randomized as the adjustment didn't change the treatment estimate. Besides that, this model also tells us that for every one additional advertisement that a user sees, the log-odds of purchasing the product increases by 0.0101, with a confidence interval of 0.00995 to 0.0103. This interval also doesn't pass zero, meaning it's statistically significant. So, watching more advertisements increases the probability of purchasing the product.
+**Main:** Adjusting for the covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. This means that Social Media and Email have relatively the same effect on conversion rates. Besides that, this model also tells us the coefficients for all the other variables:
+
+**• Age:** For every one additional year of age, the log-odds of purchasing the product increases by 0.00133, with a confidence interval of -0.00331 to 0.00597. This interval includes zero, meaning it is not statistically significant. So, age does not have a clear effect on the probability of purchasing the product.
+**• Gender:** For male users compared to female users, the log-odds of purchasing the product increases by 0.0134, with a confidence interval of -0.128 to 0.155. This interval includes zero, meaning it is not statistically significant. So, gender does not have a clear effect on the probability of purchasing the product.
+**• Income:** For every additional $10,000 of income, the log-odds of purchasing the product increases by 0.0108, with a confidence interval of -0.00762 to 0.0293. This interval barely includes zero, but it is still not statistically significant. So, income does not have a clear effect on the probability of purchasing the product.
+**• AdSpend:** For every additional $100 spent on advertising, the log-odds of purchasing the product increases by 0.0146, with a confidence interval of 0.0121 to 0.0171. This interval doesn't pass zero, meaning it's statistically significant. So, higher ad spend increases the probability of purchasing the product.
+**• WebsiteVisits:** For every one additional website visit, the log-odds of purchasing the product increases by 0.0185, with a confidence interval of 0.0136 to 0.0234. This interval doesn't pass zero, meaning it's statistically significant. So, visiting the website more often increases the probability of purchasing the product.
+**• PagesPerVisit:** For every one additional page viewed per visit, the log-odds of purchasing the product increases by 0.131, with a confidence interval of 0.104 to 0.159. This interval doesn't pass zero, meaning it's statistically significant. So, viewing more pages per visit increases the probability of purchasing the product.
+**• TimeOnSite:** For every one additional minute of time spent on the site, the log-odds of purchasing the product increases by 0.100, with a confidence interval of 0.0835 to 0.117. This interval doesn't pass zero, meaning it's statistically significant. So, spending more time on site increases the probability of purchasing the product.
+**• SocialShares:** For every one additional social share, the log-odds of purchasing the product decreases by 0.00101, with a confidence interval of -0.00342 to 0.00139. This interval includes zero, meaning it is not statistically significant. So, social sharing does not have a clear effect on the probability of purchasing the product.
+**• PreviousPurchases:** For every one additional previous purchase, the log-odds of purchasing the product increases by 0.128, with a confidence interval of 0.104 to 0.153. This interval doesn't pass zero, meaning it's statistically significant. So, having more previous purchases increases the probability of purchasing the product.
 
 
 ## Data Generating Mechanism Formula
 ```{r}
 #| cache: true
-fit_advertising <- logistic_reg(engine = "glm") |> fit(converted ~ `test group` + `total ads`, data = x)
+fit_campaign <- logistic_reg(engine = "glm") |> 
+  fit(
+    Conversion ~ CampaignChannel + Age + Gender + Income + AdSpend + WebsiteVisits + PagesPerVisit + TimeOnSite + SocialShares + PreviousPurchases, 
+    data = x |> mutate(Income = Income / 10000, AdSpend = AdSpend / 100)
+  )
 ```
 
-$$\widehat{\text{logit}(P(\text{converted} = 1))} = -4.04 - 0.389 \cdot \text{test\_group}_{\text{psa}} + 0.0101 \cdot \text{total\_ads}$$
+$$\widehat{\text{logit}(P(\text{Conversion} = 1))} = -1.25 + 0.143 \cdot \text{CampaignChannel}_{\text{PPC}} + 0.151 \cdot \text{CampaignChannel}_{\text{Referral}} + 0.0915 \cdot \text{CampaignChannel}_{\text{SEO}} - 0.00165 \cdot \text{CampaignChannel}_{\text{Social Media}} + 0.00133 \cdot \text{Age} + 0.0134 \cdot \text{Gender}_{\text{Male}} + 0.0108 \cdot \text{Income}_{10k} + 0.0146 \cdot \text{AdSpend}_{100} + 0.0185 \cdot \text{WebsiteVisits} + 0.131 \cdot \text{PagesPerVisit} + 0.100 \cdot \text{TimeOnSite} - 0.00101 \cdot \text{SocialShares} + 0.128 \cdot \text{PreviousPurchases}$$
 
 
 ## Temperance
 ```{r}
-avg_comparisons(extract_fit_engine(fit_advertising), variables = "test group", condition = "total ads")
+avg_comparisons(extract_fit_engine(fit_campaign))
 ```
 
 ### Interpretation
-Adjusted for total ads, *the average **causal effect** of watching advertisements, compared to hearing a public service announcement, on the probability that a user purchases a product is **0.00765***, with a confidence interval between 0.00696 to 0.00834. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product.
+Adjusting for all the covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a user purchases a product is 0.00765, with a confidence interval between 0.00696 to 0.00834. In other words, compared to hearing a psa, receiving an ad treatment resulted in a 0.765 percentage point increase in the probability that you'll buy a product.
 
 ### Graphs
 ```{r}
-plot_predictions(extract_fit_engine(fit_advertising), condition = c("test group"), draw = FALSE) |> 
-  ggplot(aes(x = `test group`, y = estimate, ymin = conf.low, ymax = conf.high)) +
+plot_predictions(extract_fit_engine(fit_campaign), condition = c("CampaignChannel"), draw = FALSE) |> 
+  ggplot(aes(x = CampaignChannel, y = estimate, ymin = conf.low, ymax = conf.high)) +
   geom_pointrange() +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Predicted Probability of Purchasing Product by Test Group",
-    subtitle = "Causal effect is around 0.765 percentage points, with confidence intervals that don't overlap",
+    title = "Predicted Probability of Purchasing Product by Campaign Channel",
+    subtitle = "Comparing predicted conversion rates across channels",
     y = "Percentage",
-    x = "Test Group",
-    caption = "Source: Marketing A/B Testing Dataset"
+    x = "Campaign Channel",
+    caption = "Source: Digital Marketing Campaign Dataset"
   )
 ```
 
 ```{r}
 plot_predictions(
-  extract_fit_engine(fit_advertising), 
-  condition = list("test group", "total ads" = c(1, 4, 13, 27)), 
+  extract_fit_engine(fit_campaign), 
+  condition = list("CampaignChannel", "AdSpend" = c(10, 50, 100, 200)), 
   draw = FALSE
 ) |> 
-  ggplot(aes(x = factor(`total ads`), y = estimate, color = `test group`, ymin = conf.low, ymax = conf.high)) +
+  ggplot(aes(x = factor(AdSpend), y = estimate, color = CampaignChannel, ymin = conf.low, ymax = conf.high)) +
   geom_pointrange(position = position_dodge(width = 0.4)) +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Predicted Probability of Purchasing Product by Test Group and Total Ads",
-    subtitle = "More ads/psas lead to higher probability of purchasing the product for both test groups, with the \nad group showing greater increases in probability",
-    x = "Total Ads/PSA Interactions (Min, Q1, Median, Q3)",
+    title = "Predicted Probability of Purchasing Product by Campaign Channel and Ad Spend",
+    subtitle = "Higher ad spend leads to higher probability of purchasing across channels",
+    x = "Ad Spend ($100s)",
     y = "Percentages",
-    caption = "Source: Marketing A/B Testing Dataset",
-    color = "Test Group"
+    caption = "Source: Digital Marketing Campaign Dataset",
+    color = "Campaign Channel"
   )
 ```
