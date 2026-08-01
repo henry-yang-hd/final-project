@@ -105,3 +105,4 @@ Adjusting for covariates, the average causal effect of Social Media as a means o
 
 ### Limitations and Adjustments
 This estimate might be wrong because of the vagueness between campaign channels as they can overlap, and conversion rates also have a distribution shift due to having much more data on customers who actually purchased the product. Additionally, the effects of advertisements may have changed between the time the data was collected (~2024) and the present day. So, the confidence intervals should be widened for more accuracy, although the causal effect isn't much to begin with.
+
