@@ -125,7 +125,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link active" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
+  <ul class="collapse">
+  <li><a href="#data-and-question" id="toc-data-and-question" class="nav-link" data-scroll-target="#data-and-question">Data and Question</a></li>
+  <li><a href="#concerns" id="toc-concerns" class="nav-link" data-scroll-target="#concerns">Concerns</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#limitations-and-adjustments" id="toc-limitations-and-adjustments" class="nav-link" data-scroll-target="#limitations-and-adjustments">Limitations and Adjustments</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -161,16 +170,53 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Overall conversion rates for all campaign channels. Email and Social Media seem to have the same conversion rate. SEO (Search Engine Optimization) has a slightly higher conversion rate, and PPC (Pay-Per-Click) and Referrals have the highest and almost the same conversion rates.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>Including income as a covariate, this model reinforces the claim of Social Media and Email having similar conversion rates. The two lines are directly on top of each other, almost indiscernible. Besides that, income only has a subtle effect on conversion.</p>
+<p><strong>Key note:</strong> Realistic conversion rates are likely much lower in percent, but should share the same slope (Distribution shift). So, this shouldn’t affect the causal effect between campaign channels.</p>
+</section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>The medium in which a campaign is delivered can significantly impact its effectiveness. This model uses data from the Digital Marketing Campaign dataset by Zafar to try to answer the question: What is the average causal effect of getting an email, compared to seeing a social media post, on the probability that a customer purchases a product? One significant potential weakness of this model is how we don’t know if treatment assignment was random. If treatment assignment wasn’t random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted. This model models Conversion as a Bernoulli variable which is a logistic function of CampaignChannel, Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, and PreviousPurchases. One quantity of interest is, adjusting for all the covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a 0.0174 percentage point increase in the probability that you’ll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). This causal effect is insignificant overall: the number itself is small, and the confidence interval includes zero. Besides that, this estimate might be wrong because of the vagueness between some campaign channels as they can overlap, and conversion rates also seem to have had a distribution shift due to having much more data on customers who actually purchased to product. Additionally, the effects of advertisements may have changed between the time the data was collected (~2024) and the present day. So, the confidence intervals should be widened for more accuracy, although the causal effect isn’t much to begin with.</p>
+<section id="data-and-question" class="level3">
+<h3 class="anchored" data-anchor-id="data-and-question">Data and Question</h3>
+<p>The medium in which a campaign is delivered can significantly impact its effectiveness. This model uses data from the Digital Marketing Campaign dataset by Zafar to try to answer the question: What is the average causal effect of getting an email, compared to seeing a social media post, on the probability that a customer purchases a product?</p>
+</section>
+<section id="concerns" class="level3">
+<h3 class="anchored" data-anchor-id="concerns">Concerns</h3>
+<p>One significant potential weakness of this model is how we don’t know if treatment assignment was random. If treatment assignment wasn’t random, the estimates will likely be biased and would need greater 95% confidence intervals than those predicted.</p>
+</section>
+<section id="model" class="level3">
+<h3 class="anchored" data-anchor-id="model">Model</h3>
+<p>This model models Conversion as a Bernoulli variable which is a logistic function of CampaignChannel, Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, and PreviousPurchases.</p>
+</section>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>Adjusting for covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a 0.0174 percentage point decrease in the probability that you’ll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). This causal effect is insignificant overall: the number itself is small, and the confidence interval includes zero.</p>
+</section>
+<section id="limitations-and-adjustments" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-and-adjustments">Limitations and Adjustments</h3>
+<p>This estimate might be wrong because of the vagueness between campaign channels as they can overlap, and conversion rates also have a distribution shift due to having much more data on customers who actually purchased the product. Additionally, the effects of advertisements may have changed between the time the data was collected (~2024) and the present day. So, the confidence intervals should be widened for more accuracy, although the causal effect isn’t much to begin with.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
