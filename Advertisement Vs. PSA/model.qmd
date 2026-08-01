@@ -188,7 +188,7 @@ plot_predictions(
   scale_y_continuous(labels = scales::percent) +
   labs(
     title = "Predicted Probability of Purchasing by Campaign Channel and Income",
-    subtitle = "Income levels have subtle impact on conversion probability, but more impact than age",
+    subtitle = "Income levels also have only subtle impacts on conversion probability.",
     x = "Income ($10,000s)",
     y = "Conversion Percentage",
     caption = "Source: Digital Marketing Campaign Dataset",
