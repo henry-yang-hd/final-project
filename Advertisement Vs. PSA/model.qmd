@@ -137,9 +137,10 @@ avg_comparisons(extract_fit_engine(fit_campaign))
 ```
 
 ### Interpretation - Answering the initial question
-Adjusting for all the covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a 0.0174 percentage point increase in the probability that you'll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). However, not only is this an extremely small probability difference, but also the confidence intervals pass zero. Therefore, there isn't really a causal change between Social Media and Email.
+Adjusting for all the covariates, *the **average causal effect** of Social Media as a means of campaigning, compared to receiving an Email as a means of campaigning, on the probability that a customer purchases a product is **-0.000174***, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a **0.0174 percentage point** increase in the probability that you'll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). However, not only is this an extremely small probability difference, but also the confidence intervals pass zero. Therefore, there isn't really a causal change between Social Media and Email.
 
-### Graphs
+## Graphs
+**Key note:** Realistic conversion rates are likely much lower in percent, but should share the same slope. (Distribution shift)
 ```{r}
 plot_predictions(extract_fit_engine(fit_campaign), condition = c("CampaignChannel"), draw = FALSE) |> 
   ggplot(aes(x = CampaignChannel, y = estimate, ymin = conf.low, ymax = conf.high)) +
@@ -147,7 +148,7 @@ plot_predictions(extract_fit_engine(fit_campaign), condition = c("CampaignChanne
   scale_y_continuous(labels = scales::percent) +
   labs(
     title = "Predicted Probability of Purchasing Product by Campaign Channel",
-    subtitle = "Comparing predicted conversion rates across channels",
+    subtitle = "Conversion rates range from ~70% to ~77% with minor differences between channels",
     y = "Percentage",
     x = "Campaign Channel",
     caption = "Source: Digital Marketing Campaign Dataset"
@@ -157,18 +158,81 @@ plot_predictions(extract_fit_engine(fit_campaign), condition = c("CampaignChanne
 ```{r}
 plot_predictions(
   extract_fit_engine(fit_campaign), 
-  condition = list("CampaignChannel", "AdSpend" = c(10, 50, 100, 200)), 
+  condition = c("Age", "CampaignChannel"), 
   draw = FALSE
 ) |> 
-  ggplot(aes(x = factor(AdSpend), y = estimate, color = CampaignChannel, ymin = conf.low, ymax = conf.high)) +
+  ggplot(aes(x = Age, y = estimate, color = CampaignChannel, fill = CampaignChannel)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2, color = NA) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Predicted Probability of Purchasing by Campaign Channel and Age",
+    subtitle = "Age has almost no effect on conversion probability across channels",
+    x = "Age",
+    y = "Conversion Percentage",
+    caption = "Source: Digital Marketing Campaign Dataset",
+    color = "Campaign Channel",
+    fill = "Campaign Channel"
+  )
+```
+
+```{r}
+plot_predictions(
+  extract_fit_engine(fit_campaign), 
+  condition = c("Income", "CampaignChannel"), 
+  draw = FALSE
+) |> 
+  ggplot(aes(x = Income, y = estimate, color = CampaignChannel, fill = CampaignChannel)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2, color = NA) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Predicted Probability of Purchasing by Campaign Channel and Income",
+    subtitle = "Income levels have subtle impact on conversion probability, but more impact than age",
+    x = "Income ($10,000s)",
+    y = "Conversion Percentage",
+    caption = "Source: Digital Marketing Campaign Dataset",
+    color = "Campaign Channel",
+    fill = "Campaign Channel"
+  )
+```
+
+```{r}
+plot_predictions(
+  extract_fit_engine(fit_campaign), 
+  condition = c("Gender", "CampaignChannel"), 
+  draw = FALSE
+) |> 
+  ggplot(aes(x = Gender, y = estimate, color = CampaignChannel, ymin = conf.low, ymax = conf.high)) +
   geom_pointrange(position = position_dodge(width = 0.4)) +
   scale_y_continuous(labels = scales::percent) +
   labs(
-    title = "Predicted Probability of Purchasing Product by Campaign Channel and Ad Spend",
-    subtitle = "Higher ad spend leads to higher probability of purchasing across channels",
-    x = "Ad Spend ($100s)",
-    y = "Percentages",
+    title = "Predicted Probability of Purchasing by Campaign Channel and Gender",
+    subtitle = "Males have slightly higher conversion probabilities no matter the campaign channel",
+    x = "Gender",
+    y = "Conversion Percentage",
     caption = "Source: Digital Marketing Campaign Dataset",
     color = "Campaign Channel"
   )
 ```
+
+```{r}
+x |> 
+  mutate(Conversion_num = as.numeric(as.character(Conversion))) |> 
+  group_by(PreviousPurchases) |> 
+  summarize(conversion_rate = mean(Conversion_num, na.rm = TRUE)) |> 
+  ggplot(aes(x = factor(PreviousPurchases), y = conversion_rate)) +
+  geom_col(fill = "steelblue") +
+  coord_cartesian(ylim = c(0.5, 1.0)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Conversion Percentage by Previous Purchases",
+    subtitle = "Customers with >= 2 previous purchases show higher conversion percentages",
+    x = "Previous Purchases",
+    y = "Conversion Percentage",
+    caption = "Source: Digital Marketing Campaign Dataset"
+  )
+```
+
+
+
