@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Henry Yang">
 
-<title>Model and Analysis – Campaign Channels</title>
+<title>Appendix – Campaign Channels</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,35 +71,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -127,11 +97,11 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./model.html" aria-current="page"> 
+    <a class="nav-link" href="./model.html"> 
 <span class="menu-text">Model</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./appendix.html"> 
+    <a class="nav-link active" href="./appendix.html" aria-current="page"> 
 <span class="menu-text">Appendix</span></a>
   </li>  
   <li class="nav-item">
@@ -158,19 +128,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question">Question</a>
-  <ul class="collapse">
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables">Variables</a></li>
-  </ul></li>
-  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
-  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models">Models</a>
-  <ul class="collapse">
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
-  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#data-generating-mechanism-formula" id="toc-data-generating-mechanism-formula" class="nav-link" data-scroll-target="#data-generating-mechanism-formula">Data Generating Mechanism Formula</a></li>
-  <li><a href="#answering-the-initial-question" id="toc-answering-the-initial-question" class="nav-link" data-scroll-target="#answering-the-initial-question">Answering the initial question</a></li>
-  <li><a href="#graph" id="toc-graph" class="nav-link" data-scroll-target="#graph">Graph</a></li>
+  <li><a href="#full-model-tibble" id="toc-full-model-tibble" class="nav-link active" data-scroll-target="#full-model-tibble">Full Model Tibble</a></li>
+  <li><a href="#more-comparisons" id="toc-more-comparisons" class="nav-link" data-scroll-target="#more-comparisons">More Comparisons</a></li>
   </ul>
 </nav>
     </div>
@@ -179,19 +138,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Model and Analysis</h1>
+<h1 class="title">Appendix</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Henry Yang </p>
-          </div>
-  </div>
     
   
     
@@ -202,47 +155,27 @@ window.Quarto = {
 </header>
 
 
-<section id="question" class="level2">
-<h2 class="anchored" data-anchor-id="question">Question</h2>
-<p><strong>Causal</strong>: What is the average causal effect of getting an email, compared to seeing a social media post, on the probability that a customer purchases a product?</p>
-<section id="variables" class="level3">
-<h3 class="anchored" data-anchor-id="variables">Variables</h3>
-<p><strong>Units:</strong> Each customer identified by their unique user id.</p>
-<p><strong>Covariates:</strong> Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, PreviousPurchases.</p>
-<p><strong>Treatment:</strong> CampaignChannel.</p>
-<p><strong>Outcome:</strong> Conversion.</p>
-</section>
-</section>
-<section id="limitations" class="level2">
-<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
-<p><strong>In columns:</strong> The campaign channel is not specific enough. The “Email” treatment might be the same as the “Referral” treatment if the referral was just done by email. So, the CampaignChannel might not have valid correspondence to the treatments we really want to measure. Therefore, we need more information on each treatment within CampaignChannel to determine if they are distinct.</p>
-<p><strong>Between time periods:</strong> The data is from an experiment that took place two years ago, 2024, and the effect of advertisements on users may have changed from 2024 to 2026. Although two years might not have much of an effect, changes may have occured in trends, the economy, and technology. So, the slope on the effect of watching an advertisement might have changed between 2024 and present day, which is what we want to predict.</p>
-<p><strong>Model representativeness:</strong> The data might not represent the population. In this dataset, the conversion rates for all Campaign Channels are around 85% to 90%, which is extremely unrealistic. However, we’re only trying to answer the causal effect, which is between treatments, so this shouldn’t be a major concern if the experiment was done correctly. Another subtle thing to note is how the data is comprised of 60% females and 40% males, a slight disproportionate distribution that may or may not add a small bias.</p>
-<p><strong>Potential treatment bias:</strong> We don’t know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to a specific treatment group, then our estimates of the causal effect would change drastically. Because of this, we should only conclude an accociation between treatments and conversion rates, rather than a true causal effect.</p>
-<p><strong>Probability Family:</strong> Bernoulli</p>
-<p><strong>Link Function:</strong> Logit link (logistic regression)</p>
-</section>
-<section id="models" class="level2">
-<h2 class="anchored" data-anchor-id="models">Models</h2>
+<section id="full-model-tibble" class="level2">
+<h2 class="anchored" data-anchor-id="full-model-tibble">Full Model Tibble</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="bwcyibhktk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bwcyibhktk table {
+<div id="hfxrxysuxv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hfxrxysuxv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bwcyibhktk thead, #bwcyibhktk tbody, #bwcyibhktk tfoot, #bwcyibhktk tr, #bwcyibhktk td, #bwcyibhktk th {
+#hfxrxysuxv thead, #hfxrxysuxv tbody, #hfxrxysuxv tfoot, #hfxrxysuxv tr, #hfxrxysuxv td, #hfxrxysuxv th {
   border-style: none;
 }
 
-#bwcyibhktk p {
+#hfxrxysuxv p {
   margin: 0;
   padding: 0;
 }
 
-#bwcyibhktk .gt_table {
+#hfxrxysuxv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -268,12 +201,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#bwcyibhktk .gt_caption {
+#hfxrxysuxv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bwcyibhktk .gt_title {
+#hfxrxysuxv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -285,7 +218,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#bwcyibhktk .gt_subtitle {
+#hfxrxysuxv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -297,7 +230,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#bwcyibhktk .gt_heading {
+#hfxrxysuxv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -309,13 +242,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#bwcyibhktk .gt_bottom_border {
+#hfxrxysuxv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bwcyibhktk .gt_col_headings {
+#hfxrxysuxv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -330,7 +263,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#bwcyibhktk .gt_col_heading {
+#hfxrxysuxv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -350,7 +283,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#bwcyibhktk .gt_column_spanner_outer {
+#hfxrxysuxv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -362,15 +295,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#bwcyibhktk .gt_column_spanner_outer:first-child {
+#hfxrxysuxv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bwcyibhktk .gt_column_spanner_outer:last-child {
+#hfxrxysuxv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bwcyibhktk .gt_column_spanner {
+#hfxrxysuxv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -382,11 +315,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#bwcyibhktk .gt_spanner_row {
+#hfxrxysuxv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bwcyibhktk .gt_group_heading {
+#hfxrxysuxv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -412,7 +345,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#bwcyibhktk .gt_empty_group_heading {
+#hfxrxysuxv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -427,15 +360,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#bwcyibhktk .gt_from_md > :first-child {
+#hfxrxysuxv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bwcyibhktk .gt_from_md > :last-child {
+#hfxrxysuxv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bwcyibhktk .gt_row {
+#hfxrxysuxv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +387,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#bwcyibhktk .gt_stub {
+#hfxrxysuxv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -467,538 +400,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#bwcyibhktk .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#bwcyibhktk .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#bwcyibhktk .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#bwcyibhktk .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bwcyibhktk .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#bwcyibhktk .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bwcyibhktk .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#bwcyibhktk .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bwcyibhktk .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#bwcyibhktk .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bwcyibhktk .gt_left {
-  text-align: left;
-}
-
-#bwcyibhktk .gt_center {
-  text-align: center;
-}
-
-#bwcyibhktk .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#bwcyibhktk .gt_font_normal {
-  font-weight: normal;
-}
-
-#bwcyibhktk .gt_font_bold {
-  font-weight: bold;
-}
-
-#bwcyibhktk .gt_font_italic {
-  font-style: italic;
-}
-
-#bwcyibhktk .gt_super {
-  font-size: 65%;
-}
-
-#bwcyibhktk .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#bwcyibhktk .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#bwcyibhktk .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#bwcyibhktk .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#bwcyibhktk .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#bwcyibhktk .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#bwcyibhktk .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#bwcyibhktk .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#bwcyibhktk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_heading header">
-<td colspan="7" class="gt_heading gt_title gt_font_normal">Logistic Regression Model: Conversion by Campaign Channel</td>
-</tr>
-<tr class="gt_heading even">
-<td colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Estimating the effect of different campaign channels on user conversion rates</td>
-</tr>
-<tr class="gt_col_headings header">
-<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term</th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
-<th id="std.error" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">std.error</th>
-<th id="statistic" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">statistic</th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">p.value</th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.low</th>
-<th id="conf.high" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.high</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="term">(Intercept)</td>
-<td class="gt_row gt_right" headers="estimate">1.90329</td>
-<td class="gt_row gt_right" headers="std.error">0.07542</td>
-<td class="gt_row gt_right" headers="statistic">25.23519</td>
-<td class="gt_row gt_right" headers="p.value">0.00000</td>
-<td class="gt_row gt_right" headers="conf.low">1.75809</td>
-<td class="gt_row gt_right" headers="conf.high">2.05390</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="term">CampaignChannelPPC</td>
-<td class="gt_row gt_right" headers="estimate">0.11573</td>
-<td class="gt_row gt_right" headers="std.error">0.10737</td>
-<td class="gt_row gt_right" headers="statistic">1.07789</td>
-<td class="gt_row gt_right" headers="p.value">0.28108</td>
-<td class="gt_row gt_right" headers="conf.low">−0.09472</td>
-<td class="gt_row gt_right" headers="conf.high">0.32642</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="term">CampaignChannelReferral</td>
-<td class="gt_row gt_right" headers="estimate">0.11856</td>
-<td class="gt_row gt_right" headers="std.error">0.10641</td>
-<td class="gt_row gt_right" headers="statistic">1.11418</td>
-<td class="gt_row gt_right" headers="p.value">0.26520</td>
-<td class="gt_row gt_right" headers="conf.low">−0.09011</td>
-<td class="gt_row gt_right" headers="conf.high">0.32726</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="term">CampaignChannelSEO</td>
-<td class="gt_row gt_right" headers="estimate">0.05894</td>
-<td class="gt_row gt_right" headers="std.error">0.10798</td>
-<td class="gt_row gt_right" headers="statistic">0.54586</td>
-<td class="gt_row gt_right" headers="p.value">0.58517</td>
-<td class="gt_row gt_right" headers="conf.low">−0.15267</td>
-<td class="gt_row gt_right" headers="conf.high">0.27087</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="term">CampaignChannelSocial Media</td>
-<td class="gt_row gt_right" headers="estimate">−0.01698</td>
-<td class="gt_row gt_right" headers="std.error">0.10699</td>
-<td class="gt_row gt_right" headers="statistic">−0.15868</td>
-<td class="gt_row gt_right" headers="p.value">0.87392</td>
-<td class="gt_row gt_right" headers="conf.low">−0.22677</td>
-<td class="gt_row gt_right" headers="conf.high">0.19287</td>
-</tr>
-</tbody><tfoot>
-<tr class="gt_sourcenotes odd">
-<td colspan="7" class="gt_sourcenote">Source: Digital Marketing Campaign Dataset</td>
-</tr>
-</tfoot>
-
-</table>
-
-</div>
-</div>
-</div>
-<section id="interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>Social Media is associated with an average decrease in the probability of purchasing a product. The log-odds of purchasing the product is 0.0170 lower for a customer who used Social Media (compared to Email), with a confidence interval of -0.227 to 0.193. This confidence interval passes zero, meaning that the effect of Social Media on the probability of purchasing a product compared to Email lacks evidence.</p>
-<p><br></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="xdqcgogaev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xdqcgogaev table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#xdqcgogaev thead, #xdqcgogaev tbody, #xdqcgogaev tfoot, #xdqcgogaev tr, #xdqcgogaev td, #xdqcgogaev th {
-  border-style: none;
-}
-
-#xdqcgogaev p {
-  margin: 0;
-  padding: 0;
-}
-
-#xdqcgogaev .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#xdqcgogaev .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#xdqcgogaev .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#xdqcgogaev .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#xdqcgogaev .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#xdqcgogaev .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#xdqcgogaev .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#xdqcgogaev .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#xdqcgogaev .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#xdqcgogaev .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#xdqcgogaev .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#xdqcgogaev .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#xdqcgogaev .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#xdqcgogaev .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#xdqcgogaev .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#xdqcgogaev .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#xdqcgogaev .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#xdqcgogaev .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#xdqcgogaev .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#xdqcgogaev .gt_stub_row_group {
+#hfxrxysuxv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1012,15 +414,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#xdqcgogaev .gt_row_group_first td {
+#hfxrxysuxv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xdqcgogaev .gt_row_group_first th {
+#hfxrxysuxv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xdqcgogaev .gt_summary_row {
+#hfxrxysuxv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1030,16 +432,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#xdqcgogaev .gt_first_summary_row {
+#hfxrxysuxv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_first_summary_row.thick {
+#hfxrxysuxv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xdqcgogaev .gt_last_summary_row {
+#hfxrxysuxv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1049,7 +451,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_grand_summary_row {
+#hfxrxysuxv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1059,7 +461,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#xdqcgogaev .gt_first_grand_summary_row {
+#hfxrxysuxv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1069,7 +471,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_last_grand_summary_row_top {
+#hfxrxysuxv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1079,11 +481,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_striped {
+#hfxrxysuxv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xdqcgogaev .gt_table_body {
+#hfxrxysuxv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1092,7 +494,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_footnotes {
+#hfxrxysuxv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1106,7 +508,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_footnote {
+#hfxrxysuxv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1115,7 +517,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#xdqcgogaev .gt_sourcenotes {
+#hfxrxysuxv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1129,7 +531,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#xdqcgogaev .gt_sourcenote {
+#hfxrxysuxv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1137,72 +539,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#xdqcgogaev .gt_left {
+#hfxrxysuxv .gt_left {
   text-align: left;
 }
 
-#xdqcgogaev .gt_center {
+#hfxrxysuxv .gt_center {
   text-align: center;
 }
 
-#xdqcgogaev .gt_right {
+#hfxrxysuxv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xdqcgogaev .gt_font_normal {
+#hfxrxysuxv .gt_font_normal {
   font-weight: normal;
 }
 
-#xdqcgogaev .gt_font_bold {
+#hfxrxysuxv .gt_font_bold {
   font-weight: bold;
 }
 
-#xdqcgogaev .gt_font_italic {
+#hfxrxysuxv .gt_font_italic {
   font-style: italic;
 }
 
-#xdqcgogaev .gt_super {
+#hfxrxysuxv .gt_super {
   font-size: 65%;
 }
 
-#xdqcgogaev .gt_footnote_marks {
+#hfxrxysuxv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xdqcgogaev .gt_asterisk {
+#hfxrxysuxv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xdqcgogaev .gt_indent_1 {
+#hfxrxysuxv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xdqcgogaev .gt_indent_2 {
+#hfxrxysuxv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xdqcgogaev .gt_indent_3 {
+#hfxrxysuxv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xdqcgogaev .gt_indent_4 {
+#hfxrxysuxv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xdqcgogaev .gt_indent_5 {
+#hfxrxysuxv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xdqcgogaev .katex-display {
+#hfxrxysuxv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xdqcgogaev div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hfxrxysuxv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1227,6 +629,15 @@ window.Quarto = {
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">−1.25177</td>
+<td class="gt_row gt_right" headers="std.error">0.21503</td>
+<td class="gt_row gt_right" headers="statistic">−5.82147</td>
+<td class="gt_row gt_right" headers="p.value">0.00000</td>
+<td class="gt_row gt_right" headers="conf.low">−1.67352</td>
+<td class="gt_row gt_right" headers="conf.high">−0.83045</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="term">CampaignChannelPPC</td>
 <td class="gt_row gt_right" headers="estimate">0.14304</td>
 <td class="gt_row gt_right" headers="std.error">0.11148</td>
@@ -1235,7 +646,7 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.07545</td>
 <td class="gt_row gt_right" headers="conf.high">0.36179</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="term">CampaignChannelReferral</td>
 <td class="gt_row gt_right" headers="estimate">0.15135</td>
 <td class="gt_row gt_right" headers="std.error">0.11044</td>
@@ -1244,7 +655,7 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.06519</td>
 <td class="gt_row gt_right" headers="conf.high">0.36799</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td class="gt_row gt_left" headers="term">CampaignChannelSEO</td>
 <td class="gt_row gt_right" headers="estimate">0.09147</td>
 <td class="gt_row gt_right" headers="std.error">0.11214</td>
@@ -1253,7 +664,7 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.12827</td>
 <td class="gt_row gt_right" headers="conf.high">0.31156</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="term">CampaignChannelSocial Media</td>
 <td class="gt_row gt_right" headers="estimate">−0.00165</td>
 <td class="gt_row gt_right" headers="std.error">0.11143</td>
@@ -1262,7 +673,7 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.22013</td>
 <td class="gt_row gt_right" headers="conf.high">0.21693</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td class="gt_row gt_left" headers="term">Age</td>
 <td class="gt_row gt_right" headers="estimate">0.00133</td>
 <td class="gt_row gt_right" headers="std.error">0.00237</td>
@@ -1271,7 +682,7 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.00331</td>
 <td class="gt_row gt_right" headers="conf.high">0.00597</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="term">GenderMale</td>
 <td class="gt_row gt_right" headers="estimate">0.01339</td>
 <td class="gt_row gt_right" headers="std.error">0.07224</td>
@@ -1280,7 +691,61 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.12776</td>
 <td class="gt_row gt_right" headers="conf.high">0.15548</td>
 </tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">Income</td>
+<td class="gt_row gt_right" headers="estimate">0.01085</td>
+<td class="gt_row gt_right" headers="std.error">0.00942</td>
+<td class="gt_row gt_right" headers="statistic">1.15115</td>
+<td class="gt_row gt_right" headers="p.value">0.24967</td>
+<td class="gt_row gt_right" headers="conf.low">−0.00762</td>
+<td class="gt_row gt_right" headers="conf.high">0.02933</td>
+</tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="term">AdSpend</td>
+<td class="gt_row gt_right" headers="estimate">0.01458</td>
+<td class="gt_row gt_right" headers="std.error">0.00129</td>
+<td class="gt_row gt_right" headers="statistic">11.29161</td>
+<td class="gt_row gt_right" headers="p.value">0.00000</td>
+<td class="gt_row gt_right" headers="conf.low">0.01206</td>
+<td class="gt_row gt_right" headers="conf.high">0.01713</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">WebsiteVisits</td>
+<td class="gt_row gt_right" headers="estimate">0.01850</td>
+<td class="gt_row gt_right" headers="std.error">0.00248</td>
+<td class="gt_row gt_right" headers="statistic">7.44534</td>
+<td class="gt_row gt_right" headers="p.value">0.00000</td>
+<td class="gt_row gt_right" headers="conf.low">0.01364</td>
+<td class="gt_row gt_right" headers="conf.high">0.02339</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">PagesPerVisit</td>
+<td class="gt_row gt_right" headers="estimate">0.13129</td>
+<td class="gt_row gt_right" headers="std.error">0.01383</td>
+<td class="gt_row gt_right" headers="statistic">9.49009</td>
+<td class="gt_row gt_right" headers="p.value">0.00000</td>
+<td class="gt_row gt_right" headers="conf.low">0.10427</td>
+<td class="gt_row gt_right" headers="conf.high">0.15851</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">TimeOnSite</td>
+<td class="gt_row gt_right" headers="estimate">0.10029</td>
+<td class="gt_row gt_right" headers="std.error">0.00861</td>
+<td class="gt_row gt_right" headers="statistic">11.65494</td>
+<td class="gt_row gt_right" headers="p.value">0.00000</td>
+<td class="gt_row gt_right" headers="conf.low">0.08351</td>
+<td class="gt_row gt_right" headers="conf.high">0.11725</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">SocialShares</td>
+<td class="gt_row gt_right" headers="estimate">−0.00101</td>
+<td class="gt_row gt_right" headers="std.error">0.00122</td>
+<td class="gt_row gt_right" headers="statistic">−0.82811</td>
+<td class="gt_row gt_right" headers="p.value">0.40761</td>
+<td class="gt_row gt_right" headers="conf.low">−0.00342</td>
+<td class="gt_row gt_right" headers="conf.high">0.00139</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="term">PreviousPurchases</td>
 <td class="gt_row gt_right" headers="estimate">0.12822</td>
 <td class="gt_row gt_right" headers="std.error">0.01252</td>
@@ -1300,70 +765,40 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<ul>
+<li><p><strong>Age:</strong> Although positive, the confidence interval for age passes zero, so age does not have a clear effect on the probability of purchasing the product.</p></li>
+<li><p><strong>Gender:</strong> Males have a slightly higher chance for conversion. However, the confidence interval for gender passes zero, so gender does not have a clear effect on the probability of purchasing the product.</p></li>
+<li><p><strong>Income:</strong> The confidence interval for income passes zero, so income does not have a clear effect on the probability of purchasing the product.</p></li>
+<li><p><strong>AdSpend:</strong> The confidence interval for ad spend does <em>not</em> pass zero, so higher ad spend increases the probability of purchasing the product.</p></li>
+<li><p><strong>WebsiteVisits:</strong> The confidence interval for website visits does <em>not</em> pass zero, so visiting the website more often increases the probability of purchasing the product.</p></li>
+<li><p><strong>PagesPerVisit:</strong> The confidence interval for pages per visit does <em>not</em> pass zero, so viewing more pages per visit increases the probability of purchasing the product.</p></li>
+<li><p><strong>TimeOnSite:</strong> The confidence interval for time on site does <em>not</em> pass zero, so spending more time on site increases the probability of purchasing the product.</p></li>
+<li><p><strong>SocialShares:</strong> The confidence interval for social shares passes zero, so social sharing does not have a clear effect on the probability of purchasing the product.</p></li>
+<li><p><strong>PreviousPurchases:</strong> The confidence interval for previous purchases does <em>not</em> pass zero, so having more previous purchases increases the probability of purchasing the product</p></li>
+</ul>
+<p><strong>Overall:</strong> Demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site do.</p>
 </section>
-<section id="interpretation-1" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
-<p><strong>Main:</strong> Adjusting for the nine covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. Accounting for other variables further proved that Social Media is associated with almost no difference compared to Email. Besides that, this model also tells us the coefficients for all the other variables. Overall, demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site or previous purchases do. More information in the appendix.</p>
+<section id="more-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="more-comparisons">More Comparisons</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="model_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="model_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="model_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="data-generating-mechanism-formula" class="level2">
-<h2 class="anchored" data-anchor-id="data-generating-mechanism-formula">Data Generating Mechanism Formula</h2>
-<p><span class="math display">\[\begin{aligned}
-\widehat{\text{logit}(P(\text{Conversion} = 1))} &amp;= -1.25 + 0.143 \cdot \text{CampaignChannel}_{\text{PPC}} + 0.151 \cdot \text{CampaignChannel}_{\text{Referral}} \\
-&amp;\quad + 0.0915 \cdot \text{CampaignChannel}_{\text{SEO}} - 0.00165 \cdot \text{CampaignChannel}_{\text{Social Media}} \\
-&amp;\quad + 0.00133 \cdot \text{Age} + 0.0134 \cdot \text{Gender}_{\text{Male}} + 0.0108 \cdot \text{Income}_{10k} \\
-&amp;\quad + 0.0146 \cdot \text{AdSpend}_{100} + 0.0185 \cdot \text{WebsiteVisits} + 0.131 \cdot \text{PagesPerVisit} \\
-&amp;\quad + 0.100 \cdot \text{TimeOnSite} - 0.00101 \cdot \text{SocialShares} + 0.128 \cdot \text{PreviousPurchases}
-\end{aligned}\]</span></p>
-</section>
-<section id="answering-the-initial-question" class="level2">
-<h2 class="anchored" data-anchor-id="answering-the-initial-question">Answering the initial question</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div id="svbnjwkqma" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#svbnjwkqma table {
+<div id="wkhxqgmxqp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wkhxqgmxqp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#svbnjwkqma thead, #svbnjwkqma tbody, #svbnjwkqma tfoot, #svbnjwkqma tr, #svbnjwkqma td, #svbnjwkqma th {
+#wkhxqgmxqp thead, #wkhxqgmxqp tbody, #wkhxqgmxqp tfoot, #wkhxqgmxqp tr, #wkhxqgmxqp td, #wkhxqgmxqp th {
   border-style: none;
 }
 
-#svbnjwkqma p {
+#wkhxqgmxqp p {
   margin: 0;
   padding: 0;
 }
 
-#svbnjwkqma .gt_table {
+#wkhxqgmxqp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1389,12 +824,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_caption {
+#wkhxqgmxqp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#svbnjwkqma .gt_title {
+#wkhxqgmxqp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1406,7 +841,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#svbnjwkqma .gt_subtitle {
+#wkhxqgmxqp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1418,7 +853,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#svbnjwkqma .gt_heading {
+#wkhxqgmxqp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1430,13 +865,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_bottom_border {
+#wkhxqgmxqp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_col_headings {
+#wkhxqgmxqp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1451,7 +886,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_col_heading {
+#wkhxqgmxqp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1471,7 +906,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#svbnjwkqma .gt_column_spanner_outer {
+#wkhxqgmxqp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1483,15 +918,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#svbnjwkqma .gt_column_spanner_outer:first-child {
+#wkhxqgmxqp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#svbnjwkqma .gt_column_spanner_outer:last-child {
+#wkhxqgmxqp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#svbnjwkqma .gt_column_spanner {
+#wkhxqgmxqp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1503,11 +938,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#svbnjwkqma .gt_spanner_row {
+#wkhxqgmxqp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#svbnjwkqma .gt_group_heading {
+#wkhxqgmxqp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1533,7 +968,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#svbnjwkqma .gt_empty_group_heading {
+#wkhxqgmxqp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1548,15 +983,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#svbnjwkqma .gt_from_md > :first-child {
+#wkhxqgmxqp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#svbnjwkqma .gt_from_md > :last-child {
+#wkhxqgmxqp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#svbnjwkqma .gt_row {
+#wkhxqgmxqp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1575,7 +1010,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#svbnjwkqma .gt_stub {
+#wkhxqgmxqp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1588,7 +1023,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#svbnjwkqma .gt_stub_row_group {
+#wkhxqgmxqp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1602,15 +1037,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#svbnjwkqma .gt_row_group_first td {
+#wkhxqgmxqp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#svbnjwkqma .gt_row_group_first th {
+#wkhxqgmxqp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#svbnjwkqma .gt_summary_row {
+#wkhxqgmxqp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1620,16 +1055,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#svbnjwkqma .gt_first_summary_row {
+#wkhxqgmxqp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_first_summary_row.thick {
+#wkhxqgmxqp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#svbnjwkqma .gt_last_summary_row {
+#wkhxqgmxqp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1639,7 +1074,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_grand_summary_row {
+#wkhxqgmxqp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1649,7 +1084,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#svbnjwkqma .gt_first_grand_summary_row {
+#wkhxqgmxqp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1659,7 +1094,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_last_grand_summary_row_top {
+#wkhxqgmxqp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1669,11 +1104,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_striped {
+#wkhxqgmxqp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#svbnjwkqma .gt_table_body {
+#wkhxqgmxqp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1682,7 +1117,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_footnotes {
+#wkhxqgmxqp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1696,7 +1131,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_footnote {
+#wkhxqgmxqp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1705,7 +1140,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#svbnjwkqma .gt_sourcenotes {
+#wkhxqgmxqp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1719,7 +1154,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#svbnjwkqma .gt_sourcenote {
+#wkhxqgmxqp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1727,72 +1162,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#svbnjwkqma .gt_left {
+#wkhxqgmxqp .gt_left {
   text-align: left;
 }
 
-#svbnjwkqma .gt_center {
+#wkhxqgmxqp .gt_center {
   text-align: center;
 }
 
-#svbnjwkqma .gt_right {
+#wkhxqgmxqp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#svbnjwkqma .gt_font_normal {
+#wkhxqgmxqp .gt_font_normal {
   font-weight: normal;
 }
 
-#svbnjwkqma .gt_font_bold {
+#wkhxqgmxqp .gt_font_bold {
   font-weight: bold;
 }
 
-#svbnjwkqma .gt_font_italic {
+#wkhxqgmxqp .gt_font_italic {
   font-style: italic;
 }
 
-#svbnjwkqma .gt_super {
+#wkhxqgmxqp .gt_super {
   font-size: 65%;
 }
 
-#svbnjwkqma .gt_footnote_marks {
+#wkhxqgmxqp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#svbnjwkqma .gt_asterisk {
+#wkhxqgmxqp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#svbnjwkqma .gt_indent_1 {
+#wkhxqgmxqp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#svbnjwkqma .gt_indent_2 {
+#wkhxqgmxqp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#svbnjwkqma .gt_indent_3 {
+#wkhxqgmxqp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#svbnjwkqma .gt_indent_4 {
+#wkhxqgmxqp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#svbnjwkqma .gt_indent_5 {
+#wkhxqgmxqp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#svbnjwkqma .katex-display {
+#wkhxqgmxqp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#svbnjwkqma div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wkhxqgmxqp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1815,6 +1250,22 @@ window.Quarto = {
 </tr>
 </thead>
 <tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">AdSpend</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.00146</td>
+<td class="gt_row gt_right" headers="std.error">0.00013</td>
+<td class="gt_row gt_right" headers="conf.low">0.00121</td>
+<td class="gt_row gt_right" headers="conf.high">0.00171</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">Age</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.00013</td>
+<td class="gt_row gt_right" headers="std.error">0.00024</td>
+<td class="gt_row gt_right" headers="conf.low">−0.00033</td>
+<td class="gt_row gt_right" headers="conf.high">0.00060</td>
+</tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">CampaignChannel</td>
 <td class="gt_row gt_left" headers="contrast">PPC - Email</td>
@@ -1847,6 +1298,62 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="conf.low">−0.02328</td>
 <td class="gt_row gt_right" headers="conf.high">0.02294</td>
 </tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">Gender</td>
+<td class="gt_row gt_left" headers="contrast">Male - Female</td>
+<td class="gt_row gt_right" headers="estimate">0.00134</td>
+<td class="gt_row gt_right" headers="std.error">0.00724</td>
+<td class="gt_row gt_right" headers="conf.low">−0.01285</td>
+<td class="gt_row gt_right" headers="conf.high">0.01554</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">Income</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.00109</td>
+<td class="gt_row gt_right" headers="std.error">0.00094</td>
+<td class="gt_row gt_right" headers="conf.low">−0.00076</td>
+<td class="gt_row gt_right" headers="conf.high">0.00293</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">PagesPerVisit</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.01263</td>
+<td class="gt_row gt_right" headers="std.error">0.00127</td>
+<td class="gt_row gt_right" headers="conf.low">0.01013</td>
+<td class="gt_row gt_right" headers="conf.high">0.01513</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">PreviousPurchases</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.01235</td>
+<td class="gt_row gt_right" headers="std.error">0.00116</td>
+<td class="gt_row gt_right" headers="conf.low">0.01008</td>
+<td class="gt_row gt_right" headers="conf.high">0.01461</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">SocialShares</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">−0.00010</td>
+<td class="gt_row gt_right" headers="std.error">0.00012</td>
+<td class="gt_row gt_right" headers="conf.low">−0.00034</td>
+<td class="gt_row gt_right" headers="conf.high">0.00014</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">TimeOnSite</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.00975</td>
+<td class="gt_row gt_right" headers="std.error">0.00081</td>
+<td class="gt_row gt_right" headers="conf.low">0.00816</td>
+<td class="gt_row gt_right" headers="conf.high">0.01133</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">WebsiteVisits</td>
+<td class="gt_row gt_left" headers="contrast">+1</td>
+<td class="gt_row gt_right" headers="estimate">0.00185</td>
+<td class="gt_row gt_right" headers="std.error">0.00025</td>
+<td class="gt_row gt_right" headers="conf.low">0.00136</td>
+<td class="gt_row gt_right" headers="conf.high">0.00233</td>
+</tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
 <td colspan="6" class="gt_sourcenote">Source: Digital Marketing Campaign Dataset</td>
@@ -1855,20 +1362,6 @@ window.Quarto = {
 
 </table>
 
-</div>
-</div>
-</div>
-<p>Adjusting for all the covariates, <em>the calculated causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is <strong>-0.00017</strong></em>, with a confidence interval between -0.02328 to 0.02294. However, since we don’t know if treatment assignment was random, we should only conclude that compared to Emails, receiving a Social Media treatment is <strong>associated with a 0.0174 percentage point decrease</strong> in the probability that you’ll buy a product* (confidence interval: -2.3284 to 2.2936 percentage points). Additionally, the confidence interval includes zero, so there’s <em>not enough evidence</em> of a difference. More information on other variables in the appendix.</p>
-</section>
-<section id="graph" class="level2">
-<h2 class="anchored" data-anchor-id="graph">Graph</h2>
-<p><strong>Key note:</strong> Realistic conversion rates are likely much lower in percent, but should share the same slope. (Distribution shift)</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="model_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
 </div>
 </div>

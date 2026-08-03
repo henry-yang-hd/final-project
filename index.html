@@ -102,6 +102,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Model</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./appendix.html"> 
+<span class="menu-text">Appendix</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -209,11 +213,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="conclusions" class="level3">
 <h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
-<p>Adjusting for covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. In other words, compared to Emails, receiving a Social Media treatment resulted in a 0.0174 percentage point decrease in the probability that you’ll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). This causal effect is insignificant overall: the number itself is small, and the confidence interval includes zero.</p>
+<p>Adjusting for covariates, the average causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is -0.000174, with a confidence interval between -0.023284 to 0.022936. However, <em>since we don’t know if treatment assignment was random, we should only conclude that compared to Emails, receiving a Social Media treatment is associated with a 0.0174 percentage point decrease in the probability that you’ll buy a product</em> (confidence interval: -2.3284 to 2.2936 percentage points). Additionally, the confidence interval includes zero, so there’s <em>not enough evidence</em> of a difference.</p>
 </section>
 <section id="limitations-and-adjustments" class="level3">
 <h3 class="anchored" data-anchor-id="limitations-and-adjustments">Limitations and Adjustments</h3>
-<p>This estimate might be wrong because of the vagueness between campaign channels as they can overlap, and conversion rates also have a distribution shift due to having much more data on customers who actually purchased the product. Additionally, the effects of advertisements may have changed between the time the data was collected (~2024) and the present day. So, the confidence intervals should be widened for more accuracy, although the causal effect isn’t much to begin with.</p>
+<p>This estimate might be wrong because of the vagueness between campaign channels as they can overlap, and conversion rates also have a distribution shift due to having much more data on customers who actually purchased the product. Additionally, the effects of advertisements may have changed between the time the data was collected (~2024) and the present day. Therefore, along with the fact that we don’t know if treatment assignment was random, this result may be unreliable.</p>
 
 
 </section>
