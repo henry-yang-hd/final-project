@@ -93,6 +93,7 @@ logistic_reg(engine = "glm") |>
     data = x |> mutate(Income = Income / 10000, AdSpend = AdSpend / 100)
   ) |> 
   tidy(conf.int = TRUE) |> 
+  filter(str_detect(term, "CampaignChannel|Age|Gender|PreviousPurchases")) |> 
   gt() |> 
   fmt_number(decimals = 5) |> 
   tab_header(
@@ -176,6 +177,7 @@ $$\begin{aligned}
 ## Answering the initial question
 ```{r}
 avg_comparisons(extract_fit_engine(fit_campaign)) |> 
+  filter(term == "CampaignChannel") |> 
   select(-statistic, -p.value, -s.value) |> 
   gt() |> 
   fmt_number(decimals = 5) |> 
@@ -186,7 +188,7 @@ avg_comparisons(extract_fit_engine(fit_campaign)) |>
   tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
 ```
 
-Adjusting for all the covariates, *the calculated causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is **-0.00017***, with a confidence interval between -0.02328 to 0.02294. However, since we don't know if treatment assignment was random, we should only conclude that compared to Emails, receiving a Social Media treatment is **associated with a 0.0174 percentage point decrease** in the probability that you'll buy a product* (confidence interval: -2.3284 to 2.2936 percentage points). Additionally, the confidence interval includes zero, so there's *not enough evidence* of a difference. 
+Adjusting for all the covariates, *the calculated causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is **-0.00017***, with a confidence interval between -0.02328 to 0.02294. However, since we don't know if treatment assignment was random, we should only conclude that compared to Emails, receiving a Social Media treatment is **associated with a 0.0174 percentage point decrease** in the probability that you'll buy a product* (confidence interval: -2.3284 to 2.2936 percentage points). Additionally, the confidence interval includes zero, so there's *not enough evidence* of a difference. More information on other variables in the appendix.
 
 ## Graph
 **Key note:** Realistic conversion rates are likely much lower in percent, but should share the same slope. (Distribution shift)

@@ -2,6 +2,7 @@
 title: "Appendix"
 ---
 
+## Full Model Tibble
 ```{r}
 logistic_reg(engine = "glm") |> 
   fit(
@@ -37,3 +38,16 @@ logistic_reg(engine = "glm") |>
 * **PreviousPurchases:** The confidence interval for previous purchases does *not* pass zero, so having more previous purchases increases the probability of purchasing the product
 
 **Overall:** Demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site do.
+
+## More Comparisons
+```{r}
+avg_comparisons(extract_fit_engine(fit_campaign)) |> 
+  select(-statistic, -p.value, -s.value) |> 
+  gt() |> 
+  fmt_number(decimals = 5) |> 
+  tab_header(
+    title = "Average Comparisons (Marginal Effects)",
+    subtitle = "Estimating average causal effects of campaign channels and covariates"
+  ) |> 
+  tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
+```
