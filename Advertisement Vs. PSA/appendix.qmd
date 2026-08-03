@@ -1,6 +1,43 @@
 ---
 title: "Appendix"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
 ---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(broom)
+library(gt)
+library(marginaleffects)
+```
+
+```{r}
+#| cache: true
+#| message: false
+#| warning: false
+x <- read_csv("digital_marketing_campaign_dataset - digital_marketing_campaign_dataset.csv.csv", show_col_types = FALSE) |> 
+  select(Conversion, CampaignChannel, Age, Gender, Income, AdSpend, WebsiteVisits, PagesPerVisit, TimeOnSite, SocialShares, PreviousPurchases) |> 
+  mutate(
+    Conversion = factor(Conversion, levels = c(0, 1)),
+    CampaignChannel = factor(CampaignChannel),
+    Gender = factor(Gender)
+  )
+```
+
+```{r}
+#| cache: true
+fit_campaign <- logistic_reg(engine = "glm") |> 
+  fit(
+    Conversion ~ CampaignChannel + Age + Gender + Income + AdSpend + WebsiteVisits + PagesPerVisit + TimeOnSite + SocialShares + PreviousPurchases, 
+    data = x |> mutate(Income = Income / 10000, AdSpend = AdSpend / 100)
+  )
+```
 
 ## Full Model Tibble
 ```{r}

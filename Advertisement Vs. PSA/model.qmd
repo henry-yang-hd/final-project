@@ -104,7 +104,7 @@ logistic_reg(engine = "glm") |>
 ```
 
 ### Interpretation
-**Main:** Adjusting for the covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. Accounting for other variables further proved that Social Media is associated with almost no difference compared to Email. Besides that, this model also tells us the coefficients for all the other variables. Overall, demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site or previous purchases do. More information in the appendix.
+**Main:** Adjusting for the nine covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. Accounting for other variables further proved that Social Media is associated with almost no difference compared to Email. Besides that, this model also tells us the coefficients for all the other variables. Overall, demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site or previous purchases do. More information in the appendix.
 
 ```{r}
 plot_predictions(
