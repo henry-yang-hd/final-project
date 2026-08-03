@@ -1,0 +1,39 @@
+---
+title: "Appendix"
+---
+
+```{r}
+logistic_reg(engine = "glm") |> 
+  fit(
+    Conversion ~ CampaignChannel + Age + Gender + Income + AdSpend + WebsiteVisits + PagesPerVisit + TimeOnSite + SocialShares + PreviousPurchases, 
+    data = x |> mutate(Income = Income / 10000, AdSpend = AdSpend / 100)
+  ) |> 
+  tidy(conf.int = TRUE) |> 
+  gt() |> 
+  fmt_number(decimals = 5) |> 
+  tab_header(
+    title = "Logistic Regression Model: Conversion with Campaign Channel and other Covariates",
+    subtitle = "Adjusting for other covariates"
+  ) |> 
+  tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
+```
+
+* **Age:** Although positive, the confidence interval for age passes zero, so age does not have a clear effect on the probability of purchasing the product.
+
+* **Gender:** Males have a slightly higher chance for conversion. However, the confidence interval for gender passes zero, so gender does not have a clear effect on the probability of purchasing the product.
+
+* **Income:** The confidence interval for income passes zero, so income does not have a clear effect on the probability of purchasing the product.
+
+* **AdSpend:** The confidence interval for ad spend does *not* pass zero, so higher ad spend increases the probability of purchasing the product.
+
+* **WebsiteVisits:** The confidence interval for website visits does *not* pass zero, so visiting the website more often increases the probability of purchasing the product.
+
+* **PagesPerVisit:** The confidence interval for pages per visit does *not* pass zero, so viewing more pages per visit increases the probability of purchasing the product.
+
+* **TimeOnSite:** The confidence interval for time on site does *not* pass zero, so spending more time on site increases the probability of purchasing the product.
+
+* **SocialShares:** The confidence interval for social shares passes zero, so social sharing does not have a clear effect on the probability of purchasing the product.
+
+* **PreviousPurchases:** The confidence interval for previous purchases does *not* pass zero, so having more previous purchases increases the probability of purchasing the product
+
+**Overall:** Demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site do.

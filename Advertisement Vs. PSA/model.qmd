@@ -60,7 +60,7 @@ fit_campaign <- logistic_reg(engine = "glm") |>
 
 **Model representativeness:** The data might not represent the population. In this dataset, the conversion rates for all Campaign Channels are around 85% to 90%, which is extremely unrealistic. However, we're only trying to answer the causal effect, which is between treatments, so this shouldn't be a major concern if the experiment was done correctly. Another subtle thing to note is how the data is comprised of 60% females and 40% males, a slight disproportionate distribution that may or may not add a small bias.
 
-**Potential treatment bias:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to a specific treatment group, then our estimates of the causal effect would change drastically.
+**Potential treatment bias:** We don't know if treatment assignment was random. This is important because if treatment assignment was not random, our final estimates would be biased. For example, if users who are more likely to purchase a product are more likely to be assigned to a specific treatment group, then our estimates of the causal effect would change drastically. Because of this, we should only conclude an accociation between treatments and conversion rates, rather than a true causal effect.
 
 **Probability Family:** Bernoulli
 
@@ -82,7 +82,7 @@ logistic_reg(engine = "glm") |>
 ```
 
 ### Interpretation
-Social Media resulted in an average decrease in the probability of purchasing a product. The log-odds of purchasing the product is 0.0170 lower for a customer who used Social Media (compared to Email), with a confidence interval of -0.227 to 0.193. This confidence interval passes zero, meaning that the effect of Social Media on the probability of purchasing a product compared to Email is not statistically significant.
+Social Media is associated with an average decrease in the probability of purchasing a product. The log-odds of purchasing the product is 0.0170 lower for a customer who used Social Media (compared to Email), with a confidence interval of -0.227 to 0.193. This confidence interval passes zero, meaning that the effect of Social Media on the probability of purchasing a product compared to Email lacks evidence.
 
 <br>
 
@@ -103,7 +103,7 @@ logistic_reg(engine = "glm") |>
 ```
 
 ### Interpretation
-**Main:** Adjusting for the covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. Accounting for other variables further proved that Social Media and Email have relatively the same effect on conversion rates. Besides that, this model also tells us the coefficients for all the other variables:
+**Main:** Adjusting for the covariates, the coefficient for Social Media campaigns is -0.0017, with a confidence interval of -0.220 to 0.217. The estimate decreased by a factor of ten compared to the previous model. Accounting for other variables further proved that Social Media is associated with almost no difference compared to Email. Besides that, this model also tells us the coefficients for all the other variables. Overall, demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site or previous purchases do. More information in the appendix.
 
 ```{r}
 plot_predictions(
@@ -126,8 +126,6 @@ plot_predictions(
   )
 ```
 
-* **Age:** Although positive, the confidence interval for age passes zero, so age does not have a clear effect on the probability of purchasing the product
-
 ```{r}
 plot_predictions(
   extract_fit_engine(fit_campaign), 
@@ -147,20 +145,6 @@ plot_predictions(
   )
 ```
 
-* **Gender:** Males have a slightly higher chance for conversion. However, the confidence interval for gender passes zero, so gender does not have a clear effect on the probability of purchasing the product
-
-* **Income:** The confidence interval for income passes zero, so income does not have a clear effect on the probability of purchasing the product
-
-* **AdSpend:** The confidence interval for ad spend does *not* pass zero, so higher ad spend increases the probability of purchasing the product
-
-* **WebsiteVisits:** The confidence interval for website visits does *not* pass zero, so visiting the website more often increases the probability of purchasing the product
-
-* **PagesPerVisit:** The confidence interval for pages per visit does *not* pass zero, so viewing more pages per visit increases the probability of purchasing the product
-
-* **TimeOnSite:** The confidence interval for time on site does *not* pass zero, so spending more time on site increases the probability of purchasing the product
-
-* **SocialShares:** The confidence interval for social shares passes zero, so social sharing does not have a clear effect on the probability of purchasing the product
-
 ```{r}
 x |> 
   mutate(Conversion_num = as.numeric(as.character(Conversion))) |> 
@@ -178,11 +162,6 @@ x |>
     caption = "Source: Digital Marketing Campaign Dataset"
   )
 ```
-
-* **PreviousPurchases:** The confidence interval for previous purchases does *not* pass zero, so having more previous purchases increases the probability of purchasing the product
-
-
-**Overall:** Demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site do.
 
 ## Data Generating Mechanism Formula
 $$\begin{aligned}
@@ -207,10 +186,11 @@ avg_comparisons(extract_fit_engine(fit_campaign)) |>
   tab_source_note(source_note = "Source: Digital Marketing Campaign Dataset")
 ```
 
-Adjusting for all the covariates, *the **average causal effect** of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is **-0.00017***, with a confidence interval between -0.02328 to 0.02294. In other words, compared to Emails, receiving a Social Media treatment resulted in a **0.017 percentage point** decrease in the probability that you'll buy a product (confidence interval: -2.3284 to 2.2936 percentage points). However, this causal effect between Social Media and Email isn't significant, due to the confidence interval passing zero. Additionally, the causal effect itself is extremely small.
+Adjusting for all the covariates, *the calculated causal effect of Social Media as a means of campaigning, compared to receiving an Email, on the probability that a customer purchases a product is **-0.00017***, with a confidence interval between -0.02328 to 0.02294. However, since we don't know if treatment assignment was random, we should only conclude that compared to Emails, receiving a Social Media treatment is **associated with a 0.0174 percentage point decrease** in the probability that you'll buy a product* (confidence interval: -2.3284 to 2.2936 percentage points). Additionally, the confidence interval includes zero, so there's *not enough evidence* of a difference. 
 
 ## Graph
 **Key note:** Realistic conversion rates are likely much lower in percent, but should share the same slope. (Distribution shift)
+
 ```{r}
 plot_predictions(extract_fit_engine(fit_campaign), condition = c("CampaignChannel"), draw = FALSE) |> 
   ggplot(aes(x = CampaignChannel, y = estimate, ymin = conf.low, ymax = conf.high)) +
