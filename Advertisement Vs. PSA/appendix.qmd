@@ -76,6 +76,27 @@ logistic_reg(engine = "glm") |>
 
 **Overall:** Demographic variables like age, gender, and income do not have significant effects of conversion, but rather demostrations of personal interest like time on site do.
 
+```{r}
+plot_predictions(
+  extract_fit_engine(fit_campaign), 
+  condition = c("Income", "CampaignChannel"), 
+  draw = FALSE
+) |> 
+  ggplot(aes(x = Income, y = estimate, color = CampaignChannel, fill = CampaignChannel)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2, color = NA) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Predicted Probability of Purchasing by Campaign Channel and Income",
+    subtitle = "Income levels also have only subtle impacts on conversion probability.",
+    x = "Income ($10,000s)",
+    y = "Conversion Percentage",
+    caption = "Source: Digital Marketing Campaign Dataset",
+    color = "Campaign Channel",
+    fill = "Campaign Channel"
+  )
+```
+
 ## More Comparisons
 ```{r}
 avg_comparisons(extract_fit_engine(fit_campaign)) |> 

@@ -64,30 +64,6 @@ read_csv("digital_marketing_campaign_dataset - digital_marketing_campaign_datase
 ### Interpretation
 Overall conversion rates for all campaign channels. Email and Social Media seem to have the same conversion rate. SEO (Search Engine Optimization) has a slightly higher conversion rate, and PPC (Pay-Per-Click) and Referrals have the highest and almost the same conversion rates.
 
-```{r}
-plot_predictions(
-  extract_fit_engine(fit_campaign), 
-  condition = c("Income", "CampaignChannel"), 
-  draw = FALSE
-) |> 
-  ggplot(aes(x = Income, y = estimate, color = CampaignChannel, fill = CampaignChannel)) +
-  geom_line() +
-  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2, color = NA) +
-  scale_y_continuous(labels = scales::percent) +
-  labs(
-    title = "Predicted Probability of Purchasing by Campaign Channel and Income",
-    subtitle = "Income levels also have only subtle impacts on conversion probability.",
-    x = "Income ($10,000s)",
-    y = "Conversion Percentage",
-    caption = "Source: Digital Marketing Campaign Dataset",
-    color = "Campaign Channel",
-    fill = "Campaign Channel"
-  )
-```
-
-### Interpretation
-Including income as a covariate, this model reinforces the claim of Social Media and Email having similar conversion rates. The two lines are directly on top of each other, almost indiscernible. Besides that, income only has a subtle effect on conversion.
-
 **Key note:** Realistic conversion rates are likely much lower in percent, but should share the same slope (Distribution shift). So, this shouldn't affect the causal effect between campaign channels.
 
 ## Summary
